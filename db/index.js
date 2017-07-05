@@ -18,20 +18,20 @@ let config = {
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
 
-if (process.env.DATABASE_URL) {
-  console.log(process.env.DATABASE_URL);
-  const params = url.parse(process.env.DATABASE_URL);
-  const auth = params.auth.split(':');
+// if (process.env.DATABASE_URL) {
+//   console.log(process.env.DATABASE_URL);
+//   const params = url.parse(process.env.DATABASE_URL);
+//   const auth = params.auth.split(':');
 
-  config = {
-    user: auth[0],
-    password: auth[1],
-    host: params.hostname,
-    port: params.port,
-    database: params.pathname.split('/')[1],
-    ssl: true
-  };
-};
+//   config = {
+//     user: auth[0],
+//     password: auth[1],
+//     host: params.hostname,
+//     port: params.port,
+//     database: params.pathname.split('/')[1],
+//     ssl: true
+//   };
+// };
 
 //this initializes a connection pool
 //it will keep idle connections open for 30 seconds
