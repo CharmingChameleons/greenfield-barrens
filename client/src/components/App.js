@@ -24,7 +24,7 @@ const App = ({user, logIn, updateMessages, updateLocation}) => {
         const lon = pos.coords.longitude;
 
         // return fetch(`https://vast-tor-38918.herokuapp.com/api/messages/${lat}/${lon}`);
-        return fetch(`http://localhost:8000/api/users/${username}/${lat}/${lon}`, {
+        return fetch(`/api/users/${username}/${lat}/${lon}`, {
           method: 'PUT'
         });
       })
@@ -39,7 +39,7 @@ const App = ({user, logIn, updateMessages, updateLocation}) => {
       username = prompt('Actually enter a username.');
       checkUsername();
     } else {
-      fetch(`http://localhost:8000/api/users/${username}`, {method: 'POST'})
+      fetch(`/api/users/${username}`, {method: 'POST'})
         .then(res => {
           if (res.status === 201) {
             logIn(username);
