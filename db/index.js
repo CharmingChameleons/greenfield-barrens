@@ -1,9 +1,5 @@
-/*** Sample Code for Pooling in PostgreSQL
-
-***/
-
 const pg = require('pg');
-
+const url = require('url');
 // create a config to configure both pooling behavior
 // and client options
 // note: all config is optional and the environment variables
