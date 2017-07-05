@@ -8,7 +8,7 @@ const pg = require('pg');
 // and client options
 // note: all config is optional and the environment variables
 // will be read if the config is not present
-const config = {
+let config = {
   user: 'postgres', //env var: PGUSER // TODO: figure out how to create new users
   database: 'barrens', //env var: PGDATABASE
   password: 'test', //env var: PGPASSWORD // unneccessary until you set a PW
@@ -16,6 +16,20 @@ const config = {
   port: 5432, //env var: PGPORT // this should NOT be the same as your server's port
   max: 120, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+};
+
+if (process.env.DATABASE_URL) {
+  const params = url.parse(process.env.DATABASE_URL);
+  const auth = params.auth.split(':');
+
+  config = {
+    user: auth[0],
+    password: auth[1],
+    host: params.hostname,
+    port: params.port,
+    database: params.pathname.split('/')[1],
+    ssl: true
+  };
 };
 
 //this initializes a connection pool
