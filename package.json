@@ -11,21 +11,10 @@
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
     "watch": "webpack -d --watch",
     "dev": "webpack-dev-server",
-    "start": "nodemon server/index.js"
+    "start": "node server/index.js",
+    "start-test": "nodemon server/index.js"
   },
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "cors": "^2.8.3",
-    "express": "^4.15.3",
-    "pg": "^6.4.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-redux": "^5.0.5",
-    "react-router-dom": "^4.1.1",
-    "redux": "^3.7.1",
-    "socket.io": "^2.0.3"
-  },
-  "devDependencies": {
     "babel-cli": "^6.7.5",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
@@ -33,18 +22,31 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.7.2",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.3",
     "css-loader": "^0.28.4",
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "express": "^4.15.3",
     "node-sass": "^4.5.3",
-    "nodemon": "^1.11.0",
+    "pg": "^6.4.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.7.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "socket.io": "^2.0.3",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"
   },
+  "devDependencies": {
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "nodemon": "^1.11.0"
+  },
   "babel": {
     "presets": [
-      "env"
+      "env",
+      "react"
     ]
   }
 }
