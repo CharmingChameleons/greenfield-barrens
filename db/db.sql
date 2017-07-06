@@ -73,7 +73,7 @@ CREATE TABLE session (
 -- );
 
 -- Hard Coding the first 3 Channels into Channels Table
-INSERT INTO channels VALUES (DEFAULT, 'general'), (DEFAULT, 'marketplace'), (DEFAULT, 'events');
+INSERT INTO channels VALUES (DEFAULT, 'General'), (DEFAULT, 'Marketplace'), (DEFAULT, 'Events');
 
 -- Hard Coding Regions into the Areas Table
 
@@ -88,4 +88,4 @@ INSERT INTO areas VALUES (DEFAULT, 'Hack Reactor', -122.4127313, 37.7453366, -12
 -- HR Lat & Long (37.7836076, -122.4090994); Below is Command for Campanile
 -- SELECT name FROM AREAS WHERE ST_Contains(geom, ST_SetSRID(ST_MakePoint(37.8723078, -122.2582824),4326));
 
-INSERT INTO areas VALUES (DEFAULT, 'UC Berkeley', 0, 0, 0, 0, ST_Polygon(ST_GeomFromText('LINESTRING(37.8680837 -122.265975, 37.8739127 -122.2658892, 37.8751862 -122.2570486, 37.8718558 -122.2530789, 37.8696241 -122.2526511, 37.8680837 -122.265975)'), 4326));
+INSERT INTO areas VALUES (DEFAULT, 'UC Torrance', -118.314977, 33.850890, -118.364977, 33.890890, ST_Polygon(ST_GeomFromText('LINESTRING(37.8680837 -122.265975, 37.8739127 -122.2658892, 37.8751862 -122.2570486, 37.8718558 -122.2530789, 37.8696241 -122.2526511, 37.8680837 -122.265975)'), 4326));
