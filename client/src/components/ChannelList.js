@@ -9,13 +9,20 @@ TODOS:
   styling for current room
 */
 
-const ChannelList = ({ user, channels, changeChannel }) => {
+const ChannelList = ({ user, channels, changeChannel, setPage }) => {
   return (
     <div className="channel-list">
       <div className="ui center aligned large header">Channels</div>
       <div className="channel-list">
         <div className="ui piled segments ">
-          {channels.map(channel => <ChannelListItem user={user} channel={channel} changeChannel={changeChannel} />)}
+          {channels.map(channel => 
+            <ChannelListItem 
+              user={user} 
+              channel={channel} 
+              changeChannel={changeChannel} 
+              setPage={setPage}
+            />
+          )}
         </div>
       </div>
     </div>
