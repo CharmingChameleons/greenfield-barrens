@@ -2,6 +2,7 @@ import React from 'react';
 import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
+import ChannelAdd from './ChannelAdd';
 import ChannelList from './ChannelList';
 import UserList from './UserList';
 import MessageList from './MessageList';
@@ -20,7 +21,6 @@ const MessageBoard = ({
   getUserInfo,
   changeChannel
 }) => {
-  console.log('page', currentPage);
   console.log('new page', currentPage);
   const el = currentPage.currentPage === 'landing' 
     ? <div className="message-board">
@@ -32,8 +32,14 @@ const MessageBoard = ({
         <MessageList messages={messages} user={user} />   
         <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
       </div>
-    : <div>
-        Here is the new page I hope it works
+    : <div className="channel-board">
+        <div className="ui three item menu">
+          <a className="item"> β </a>
+          <a className="active item">{user.region}</a>
+          <a className="item">{user.username}</a>
+        </div>
+        <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel} />   
+        <ChannelAdd />
       </div>
 
   const users = Array.from(new Set(messages.map(message => message.username)));
