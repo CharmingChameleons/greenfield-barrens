@@ -22,7 +22,8 @@ CREATE TABLE areas (
 
 CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
-  username VARCHAR UNIQUE NOT NULL,
+  username VARCHAR NOT NULL,
+  oauthid VARCHAR UNIQUE,
   area INTEGER REFERENCES areas (id),
   points INTEGER,
   salt VARCHAR UNIQUE
@@ -67,7 +68,7 @@ CREATE TABLE session (
 
 -- Attendees, Join would be many events to many users; Potential for Future Implementation
 -- CREATE TABLE users_events (
---   ID SERIAL PRIMARY KEY, 
+--   ID SERIAL PRIMARY KEY,
 --   users
 --   events
 -- );
