@@ -14,7 +14,8 @@ const messages = (state = initialState, action) => {
     console.log('In reducer setMessages');
     return action.messages;
   case UPDATE_MESSAGES:
-    return [...state, action.messages ];
+     //state.push(action.message)
+    return [...state, action.message];
   default:
     return state;
   }

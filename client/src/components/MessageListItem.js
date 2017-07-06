@@ -10,6 +10,7 @@ import React from 'react';
 */
 
 const MessageListItem = ({ message, user }) => {
+  console.log('In MessageListItem')
   const el = message.username === user.username // change to userId
     ? <div className="own-message">
         <div className="ui segment">
@@ -22,7 +23,7 @@ const MessageListItem = ({ message, user }) => {
         <div className="ui segment">
           <span>{message.username} - {message.timestamp}</span>
           <br />
-          {message.text}
+          {message.content}
         </div>
       </div>;
   return (
