@@ -4,11 +4,12 @@ const url = require('url');
 // and client options
 // note: all config is optional and the environment variables
 // will be read if the config is not present
-let config = {
-  user: 'postgres', //env var: PGUSER // TODO: figure out how to create new users
+
+const config = {
+  user: 'Priyanka', //env var: PGUSER // TODO: figure out how to create new users
   database: 'barrens', //env var: PGDATABASE
-  password: 'test', //env var: PGPASSWORD // unneccessary until you set a PW
-  host: 'localhost', // Server hosting the postgres database
+  //password: 'PGPASSWORD', //env var: PGPASSWORD // unneccessary until you set a PW
+  //host: 'localhost', // Server hosting the postgres database
   port: 5432, //env var: PGPORT // this should NOT be the same as your server's port
   max: 120, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed

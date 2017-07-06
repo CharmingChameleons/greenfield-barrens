@@ -9,11 +9,11 @@ import Navbar from './Navbar';
 import MessageBoardContainer from '../containers/MessageBoardContainer';
 import Login from './Login';
 import Signup from './Signup';
-import {updateMessages} from '../actions/messages';
+import {updateMessages, setMessages} from '../actions/messages';
 import {logIn, updateLocation} from '../actions/user';
 
 
-const App = ({user, logIn, updateMessages, updateLocation}) => {
+const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages}) => {
   const socket = io();
   let username;
 
@@ -32,7 +32,18 @@ const App = ({user, logIn, updateMessages, updateLocation}) => {
       .then(region => {
         updateLocation(region);
         socket.emit('subscribe', region);
-      });
+        return fetch(`http://localhost:8000/api/messages/${region}`, {
+          method: 'GET'
+        });
+      })
+      .then((response) => {
+        console.log('in the room')
+        return response.json()
+      })
+      .then((messages) => {
+        console.log('All Messages in the room', messages)
+        setMessages(messages)
+      })
 
   const checkUsername = () => {
     if (!username) {
@@ -44,8 +55,13 @@ const App = ({user, logIn, updateMessages, updateLocation}) => {
           if (res.status === 201) {
             logIn(username);
             socket.on('message', message => {
+              console.log('In app socket.on.message', message)
               updateMessages(message);
             });
+            // socket.on('initialMessages', messages => {
+            //   console.log('In app socket.on.initial.messages', messages)
+            //   setMessages(messages);
+            // });
             getLocationAndUpdate(username);
           } else {
             username = prompt('Unfortunately, that username is taken. Please try another.');
@@ -64,16 +80,17 @@ const App = ({user, logIn, updateMessages, updateLocation}) => {
   return (
     <div className="app">
       <Switch>
-        <Route exact path="/" render={props => <MessageBoardContainer socket={socket}/>}/>
-        <Route path="/signup" component={Signup}/>
-        <Route path="/login" component={Login}/>
+        <Route exact path='/' render={props => <MessageBoardContainer socket={socket} />} />
+        <Route path='/signup' component={Signup} />
+        <Route path='/login' component={Login} />
       </Switch>
     </div>
   );
 };
 
-const mapStateToProps = ({user}) => ({
-  user
+const mapStateToProps = ({user, messages}) => ({
+  user,
+  messages
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -82,6 +99,12 @@ const mapDispatchToProps = dispatch => ({
   },
   updateMessages: message => {
     dispatch(updateMessages(message));
+  },
+  updateInitialMessages: messages => {
+    dispatch(updateInitialMessages(messages));
+  },
+  setMessages: messages => {
+    dispatch(setMessages(messages));
   },
   updateLocation: location => {
     dispatch(updateLocation(location));

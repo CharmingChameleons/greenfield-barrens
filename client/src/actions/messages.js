@@ -14,3 +14,8 @@ export const updateMessages = message => ({
   type: UPDATE_MESSAGES,
   message
 });
+
+export const updateInitialMessages = messages => ({
+  type: UPDATE_INITIAL_MESSAGES,
+  messages
+});

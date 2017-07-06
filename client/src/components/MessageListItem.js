@@ -6,6 +6,7 @@ import React from 'react';
     onClick DM button, should allow DM to poster
       optimally, prepopulate DM with "re: [message text]"
     username instead of userId
+     <span className="meta own">{message.username} - {message.timestamp}</span>
 */
 
 const MessageListItem = ({ message, user }) => {

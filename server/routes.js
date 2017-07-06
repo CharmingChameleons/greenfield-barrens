@@ -7,12 +7,19 @@ var router = require('express').Router();
 router.get('/', controller.messages.get);
 
 //Landing page post with Login
-router.get('/api/messages/:lat/:long', controller.messages.get);
+router.get('/messages/:lat/:long', controller.messages.get);
 
 //Get messages for GeoLocation
-router.get('/api/users', controller.users.get);
+router.get('/messages/:area', controller.messages.getRoomMessages);
 
 //Post messages to GeoLocation
-router.post('/api/users', controller.users.post);
+router.post('/users/:newUsername', controller.users.post);
+
+//Post messages to GeoLocation
+router.put('/users/:username/:lat/:long', controller.users.put);
+
+router.get('/region/:lat/:long', controller.region.get);
+
+router.get(':lat/:long/:channel', controller.channel.get);
 
 module.exports = router;

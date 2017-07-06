@@ -1,31 +1,50 @@
-//External Dependencies
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-// Middleware
-const bodyParser = require('body-parser'),
-      cors = require('cors');
-
-//App Dependencies
 const db = require('../db');
+const controller = require('./controllers');
 
-//Router
-let router = require('./routes.js');
+const { dummyChannels, dummyUsers, dummyMessages } = require('./dummyData');
 
-//Start Server
 const app = express();
+
 const PORT = process.env.PORT || 8000;
-
-//Serve client files
-app.use(express.static(__dirname + '/../client/dist'));
-
-app.use(cors());
 
 const server = app.listen(PORT, () => {
   console.log('listening on port 8000!');
 });
 
-// ---------------------------- SOCKET LOGIC ------------------------------
 const io = require('socket.io').listen(server);
+
+app.use(express.static(__dirname + '/../client/dist'));
+app.use(cors());
+
+//Router
+const router = require('./routes.js');
+
+app.use('/api', router);
+
+// app.get('/', (req, res) => {
+//   res.send('server is responding to different paths');
+// });
+
+// app.get('/api/messages/:lat/:long', (req, res) => {
+//   // figure out which region we're looking in
+//   //retrieve all messages that have been tagged with that region
+//   //retrieve all messages tagged with general'
+//   console.log(`receiving the initial GET request with coords ${req.params.lat}, ${req.params.long}`);
+//   //retrieve all messages tagged with the region corresponding to incoming coords
+//   res.json(dummyMessages);
+// });
+
+// app.get('/api/:lat/:long/:channel', (req, res) => {
+//   //
+// });
+
+
+// likely no posting messages route -- everything will happen in the socket
+// ---------------------------- SOCKET LOGIC ------------------------------
 
 io.sockets.on('connection', (socket) => {
   console.log('a user has connected');
@@ -40,14 +59,7 @@ io.sockets.on('connection', (socket) => {
   socket.on('send', (data) => {
     console.log('received message', data);
     io.sockets.in(data.region).emit('message', data);
-    //need to get the id corresponding to a user, the id corresponding to the channel name, and the id corresponding to the area
-    db.query(`INSERT INTO messages VALUES (DEFAULT, null, '${data.text}', 1, 0, 0, 1, null, null);`, null, (err, results) => {
-      if (err) {
-        console.log('err inserting into messages', err);
-      } else {
-        console.log('success inserting into messages');
-      }
-    });
-    // io.emit('message', data);
+    controller.messages.insertNewMessage(data)
+    //io.emit('message', data);
   });
 });
