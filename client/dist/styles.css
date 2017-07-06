@@ -5,7 +5,7 @@
 
 #footer {
   background-color: white;
-  position: absolute;
+  position: relative;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -17,14 +17,21 @@
   text-align: right;
   float: right;
   width: 80%;
-  margin-bottom: 50px;
+  position: absolute;
+  bottom: 10px;
 }
 
 .other-user-message {
   text-align: left;
   float: left;
   width: 80%;
-  margin-bottom: 50px;
+  position: absolute;
+  bottom: 10px;
+}
+
+.message-board {
+  overflow: scroll;
+  height: 80%;
 }
 
 .message-prompt {

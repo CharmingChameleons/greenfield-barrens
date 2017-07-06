@@ -63,7 +63,7 @@ const App = ({user, logIn, updateMessages, updateLocation}) => {
   // <Navbar />
   return (
     <div className="app">
-      <div className="ui three item menu">
+      <div className="ui three item menu upper-nav-bar">
         <a className="item"> β </a>
         <a className="active item">{user.region}</a>
         <a className="item">{user.username}</a>
