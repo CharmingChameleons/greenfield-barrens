@@ -45,7 +45,6 @@ class MessageInput extends Component {
               />
             </div>
           </div>
-
           <div id="message-submit" className="right borderless item">
             <button id="message-button" className="ui button">
               <i className="talk icon"></i>

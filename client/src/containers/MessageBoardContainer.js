@@ -12,10 +12,14 @@ const mapStateToProps = ({ messages, user }, { socket }) => ({ // state, ownProp
 
 const mapDispatchToProps = dispatch => ({
   setMessages: messages => {
+    console.log('In Container setMessages', messages)
     dispatch(setMessages(messages));
   },
   updateMessages: message => {
     dispatch(updateMessages(message));
+  },
+  updateInitialMessages: messages => {
+    dispatch(updateInitialMessages(messages));
   },
   changeChannel: channel => {
     dispatch(changeChannel(channel));
