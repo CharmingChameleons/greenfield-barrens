@@ -12,7 +12,7 @@ const MessageList = ({ messages, user }) => {
   return (
     <div className="message-body">
       {user.region === '... nowhere ...'
-        ? <h4>Please wait for login...</h4>
+        ? <h4 className="message-prompt">Please wait for login...</h4>
         : messageItems}
     </div>
   );
