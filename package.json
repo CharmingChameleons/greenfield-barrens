@@ -26,6 +26,8 @@
     "cors": "^2.8.3",
     "css-loader": "^0.28.4",
     "express": "^4.15.3",
+    "graceful-fs": "^4.1.11",
+    "minimatch": "^3.0.4",
     "node-sass": "^4.5.3",
     "pg": "^6.4.0",
     "react": "^15.6.1",

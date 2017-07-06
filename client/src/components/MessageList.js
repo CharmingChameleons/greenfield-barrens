@@ -8,10 +8,9 @@ const MessageList = ({ messages, user }) => {
     ? messagesInChannel.map(message =>
         <MessageListItem message={message} user={user} />
       )
-    : <h4> No messages in this channel since login... Get the conversation going! </h4>;
+    : <h4 className="message-prompt"> Get the conversation going! </h4>;
   return (
-    <div className="message-list inline-block">
-      <h2 className="title">Messages</h2>
+    <div className="message-body">
       {user.region === '... nowhere ...'
         ? <h4>Please wait for login...</h4>
         : messageItems}

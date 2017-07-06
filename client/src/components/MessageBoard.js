@@ -18,15 +18,15 @@ const MessageBoard = ({
 
   return (
     <div className="message-board">
-      <div className="channels-users-sidebar inline-block">
-        <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel} />
-        <UserList users={users} user={user} />
+      <div className="ui three item menu">
+        <a className="item"> β </a>
+        <a className="active item">{user.region}</a>
+        <a className="item">{user.username}</a>
       </div>
-      <div className="message-list-container inline-block">
-        <MessageList messages={messages} user={user} />
-        <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
-      </div>
+      <MessageList messages={messages} user={user} />   
+      <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
     </div>
+    
   );
 };
 

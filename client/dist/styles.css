@@ -1,0 +1,63 @@
+#app {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+
+#footer {
+  background-color: white;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+  overflow: hidden;
+}
+
+.own-message {
+  text-align: right;
+  float: right;
+  width: 80%;
+  margin: 10px;
+}
+
+.other-user-message {
+  text-align: left;
+  float: left;
+  width: 80%;
+  margin: 10px;
+}
+
+.message-body {
+  height: 82%;
+  width: 100%;
+  overflow: auto;
+}
+
+.message-board {
+  height: 100%;
+  width: 100%;
+}
+
+.message-prompt {
+  float: center;
+  text-align: center;
+}
+
+#message-input {
+  width: 80%;
+}
+
+#message-submit {
+  width: 20%;
+}
+
+#message-button {
+  width: 100%;
+  height: 80%;
+}

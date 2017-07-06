@@ -33,17 +33,26 @@ class MessageInput extends Component {
 
   render() {
     return (
-      <div className="message-input">
-        <form action="" onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            placeholder="New Message"
-            onChange={this.handleChange}
-            value={this.state.input}
-          />
-          <button>Send</button>
-        </form>
-      </div>
+      <form action="" onSubmit={this.handleSubmit}>
+        <div id="footer" className="ui menu">
+          <div id="message-input" className="left item">
+            <div className="ui icon input">
+              <input
+                type="text"
+                placeholder="New Message"
+                onChange={this.handleChange}
+                value={this.state.input}
+              />
+            </div>
+          </div>
+
+          <div id="message-submit" className="right borderless item">
+            <button id="message-button" className="ui button">
+              <i className="talk icon"></i>
+            </button>
+          </div>
+        </div>
+      </form>
     );
   }
 }
