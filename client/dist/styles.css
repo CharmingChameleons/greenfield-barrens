@@ -1,7 +1,7 @@
 #app {
   width: 100%;
   height: 100%;
-  background-color: gray;
+  background-color: gainsboro;
 }
 
 #footer {
@@ -12,4 +12,19 @@
   width: 100%;
   height: 10%;
   overflow: hidden;
+}
+
+.own-message {
+  text-align: right;
+  float: right;
+}
+
+.other-user-message {
+  text-align: left;
+  float: left;
+}
+
+.message-prompt {
+  float: center;
+  text-align: center;
 }

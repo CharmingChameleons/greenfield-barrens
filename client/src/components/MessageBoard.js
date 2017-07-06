@@ -18,10 +18,6 @@ const MessageBoard = ({
 
   return (
     <div className="message-board">
-      <div className="channels-users-sidebar inline-block">
-        <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel} />
-        <UserList users={users} user={user} />
-      </div>
       <div className="message-list-container inline-block">
         <MessageList messages={messages} user={user} />
         <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
