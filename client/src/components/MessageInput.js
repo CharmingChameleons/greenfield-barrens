@@ -35,7 +35,7 @@ class MessageInput extends Component {
     return (
       <form action="" onSubmit={this.handleSubmit}>
         <div id="footer" className="ui menu">
-          <div className="item">
+          <div id="message-input" className="left item">
             <div className="ui icon input">
               <input
                 type="text"
@@ -46,8 +46,8 @@ class MessageInput extends Component {
             </div>
           </div>
 
-          <div className="right item">
-            <button className="ui button">
+          <div id="message-submit" className="right borderless item">
+            <button id="message-button" className="ui button">
               <i className="talk icon"></i>
             </button>
           </div>
