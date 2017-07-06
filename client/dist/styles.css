@@ -4,12 +4,25 @@
   position: absolute;
 }
 
+#message-input {
+  width: 80%;
+}
+
+#message-submit {
+  width: 20%;
+}
+
+#message-button {
+  width: 100%;
+  height: 80%;
+}
+
 .app {
   width: 100%;
   height: 100%;
 }
 
-#footer {
+.footer {
   background-color: white;
   position: absolute;
   left: 0;
@@ -17,6 +30,25 @@
   width: 100%;
   height: 10%;
   overflow: hidden;
+}
+
+.channel-list {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.channel-add {
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgrey;
+}
+
+.channel-button {
+  position:relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 }
 
 .own-message {
@@ -39,7 +71,7 @@
   overflow: auto;
 }
 
-.message-board {
+.message-board, .channel-board {
   height: 100%;
   width: 100%;
 }
@@ -49,15 +81,3 @@
   text-align: center;
 }
 
-#message-input {
-  width: 80%;
-}
-
-#message-submit {
-  width: 20%;
-}
-
-#message-button {
-  width: 100%;
-  height: 80%;
-}

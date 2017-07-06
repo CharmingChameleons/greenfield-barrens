@@ -2,6 +2,7 @@ import React from 'react';
 import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
+import ChannelAdd from './ChannelAdd';
 import ChannelList from './ChannelList';
 import UserList from './UserList';
 import MessageList from './MessageList';
@@ -29,18 +30,36 @@ const MessageBoard = ({
           <a className="active item">{user.region}</a>
           <a className="item">{user.username}</a>
         </div>
-        <MessageList messages={messages} user={user} />   
-        <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
+        <MessageList 
+          messages={messages} 
+          user={user} 
+        />   
+        <MessageInput 
+          socket={socket} 
+          getUserInfo={getUserInfo} 
+          user={user} 
+        />
       </div>
-    : <div>
-        Here is the new page I hope it works
+    : <div className="channel-board">
+        <div className="ui three item menu">
+          <a className="item"> β </a>
+          <a className="active item">{user.region}</a>
+          <a className="item">{user.username}</a>
+        </div>
+        <ChannelList 
+          user={user} 
+          channels={dummyChannels} 
+          changeChannel={changeChannel} 
+        />
+        <ChannelAdd
+        />
       </div>
 
   const users = Array.from(new Set(messages.map(message => message.username)));
   console.log('In MessageBoard messages', messages)
   console.log('In MessageBoards', user)
   return (
-    <div className='app'>
+    <div clasNsame='app'>
       {el}
     </div>
   );

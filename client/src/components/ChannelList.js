@@ -12,8 +12,16 @@ TODOS:
 const ChannelList = ({ user, channels, changeChannel }) => {
   return (
     <div className="channel-list">
-      <h4 className="title">Channels</h4>
-      {channels.map(channel => <ChannelListItem user={user} channel={channel} changeChannel={changeChannel} />)}
+      <h4 className="ui huge center aligned header">Channels</h4>
+        <div className="ui piled segments channel-list">
+          {channels.map(channel => 
+            <ChannelListItem 
+              user={user} 
+              channel={channel} 
+              changeChannel={changeChannel} 
+            />)
+          }
+        </div>
     </div>
   );
 };
