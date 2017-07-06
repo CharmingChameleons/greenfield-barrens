@@ -1,7 +1,7 @@
 import { SET_PAGE } from '../actions/actionTypes';
 
 const initialState = {
-  currentPage: 'landing'
+  currentPage: 'nlanding'
 };
 
 const currentPage = (state = initialState, action) => {

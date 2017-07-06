@@ -13,8 +13,10 @@ const ChannelList = ({ user, channels, changeChannel }) => {
   return (
     <div className="channel-list">
       <div className="ui center aligned large header">Channels</div>
-      <div className="ui piled segments channel-list">
-      {channels.map(channel => <ChannelListItem user={user} channel={channel} changeChannel={changeChannel} />)}
+      <div className="channel-list">
+        <div className="ui piled segments ">
+          {channels.map(channel => <ChannelListItem user={user} channel={channel} changeChannel={changeChannel} />)}
+        </div>
       </div>
     </div>
   );
