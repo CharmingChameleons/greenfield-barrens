@@ -63,9 +63,11 @@ const App = ({user, logIn, updateMessages, updateLocation}) => {
   // <Navbar />
   return (
     <div className="app">
-      <h1 className="title">Barrens</h1>
-      <h3>{user.region}</h3>
-      <h5>{user.username}</h5>
+    <div className="ui three item menu">
+      <a className="item"> β </a>
+      <a className="active item">{user.region}</a>
+      <a className="item">{user.username}</a>
+    </div>
       <Switch>
         <Route exact path="/" render={props => <MessageBoardContainer socket={socket}/>}/>
         <Route path="/signup" component={Signup}/>
