@@ -21,11 +21,16 @@ const MessageBoard = ({
   getUserInfo,
   changeChannel
 }) => {
-  console.log('new page', currentPage);
+  console.log('new page', currentPage)
+
+  const changePage = function(pageName) {
+    setPage(pageName)
+  }
+
   const el = currentPage.currentPage === 'landing' 
     ? <div className="message-board">
         <div className="ui three item menu">
-          <a className="item"> β </a>
+          <a className="item" onClick={ function() {changePage('notlanding')} } > β </a>
           <a className="active item">{user.region}</a>
           <a className="item">{user.username}</a>
         </div>
@@ -34,7 +39,7 @@ const MessageBoard = ({
       </div>
     : <div className="channel-board">
         <div className="ui three item menu">
-          <a className="item"> β </a>
+          <a className="item" onClick={ function() {changePage('landing')} }> β </a>
           <a className="active item">{user.region}</a>
           <a className="item">{user.username}</a>
         </div>
