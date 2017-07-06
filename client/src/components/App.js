@@ -32,7 +32,7 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
       .then(region => {
         updateLocation(region);
         socket.emit('subscribe', region);
-        return fetch(`http://localhost:8000/api/messages/${region}`, {
+        return fetch(`/api/messages/${region}`, {
           method: 'GET'
         });
       })
