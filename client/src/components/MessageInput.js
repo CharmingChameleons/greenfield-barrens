@@ -34,7 +34,7 @@ class MessageInput extends Component {
   render() {
     return (
       <form action="" onSubmit={this.handleSubmit}>
-        <div id="footer" className="ui menu">
+        <div id="footer-messages" className="ui menu">
           <div id="message-input" className="left item">
             <div className="ui icon input">
               <input

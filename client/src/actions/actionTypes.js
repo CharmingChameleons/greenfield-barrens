@@ -19,3 +19,6 @@ export const LOG_OUT = 'LOG_OUT';
 export const CHANGE_CHANNEL = 'CHANGE_CHANNEL';
 
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
+
+// currentPage
+export const SET_PAGE = 'SET_PAGE';
