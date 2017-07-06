@@ -5,7 +5,7 @@ const url = require('url');
 // note: all config is optional and the environment variables
 // will be read if the config is not present
 
-const config = {
+let config = {
   user: 'Priyanka', //env var: PGUSER // TODO: figure out how to create new users
   database: 'barrens', //env var: PGDATABASE
   //password: 'PGPASSWORD', //env var: PGPASSWORD // unneccessary until you set a PW
