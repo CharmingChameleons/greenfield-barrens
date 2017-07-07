@@ -56,3 +56,22 @@ export const dummyUsers = [
     channel: 'Trade'
   }
 ];
+
+export const dummyRegions = [
+  {
+    id: 0,
+    name: 'what',
+    region: 'Region 1'
+  },
+  {
+    id: 1,
+    name: 'what',
+    region: 'Region 2'
+  },
+  {
+    id: 2,
+    name: 'what',
+    region: 'Region 3'
+  }, 
+
+]

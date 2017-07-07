@@ -9,13 +9,19 @@ TODOS:
   styling for current room
 */
 
-const RegionList = ({ user }) => {
+const RegionList = ({ user, regions, setPage }) => {
   return (
     <div className="channel-list">
       <div className="ui center aligned large header">Regions</div>
       <div className="channel-list">
         <div className="ui piled segments ">
-          This is a test.
+          {regions.map(region => 
+            <RegionListItem 
+              user={user} 
+              region={region} 
+              setPage={setPage}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -23,11 +29,3 @@ const RegionList = ({ user }) => {
 };
 
 export default RegionList;
-          // {regions.map(channel => 
-          //   <ChannelListItem 
-          //     user={user} 
-          //     channel={channel} 
-          //     changeChannel={changeChannel} 
-          //     setPage={setPage}
-          //   />
-          // )}

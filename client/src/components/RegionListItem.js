@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RegionListItem = ({ user, setPage } ) => {
+const RegionListItem = ({ user, setPage, region } ) => {
   return (
     <div
       className='ui segment' 
@@ -9,7 +9,7 @@ const RegionListItem = ({ user, setPage } ) => {
           setPage('landing');
         } 
       }>
-      Dummy names
+      {region.region}
     </div>
   );
 };

@@ -4,14 +4,14 @@ import {connect} from 'react-redux';
 
 import ChannelAdd from './ChannelAdd';
 import ChannelList from './ChannelList';
-import UserList from './UserList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
-import RegionList from './RegionList';
 import RegionAdd from './RegionAdd';
+import RegionList from './RegionList';
+import UserList from './UserList';
 
-import { dummyChannels, dummyUsers, dummyMessages } from '../dummyData';
+import { dummyChannels, dummyUsers, dummyMessages, dummyRegions } from '../dummyData';
 import { setPage } from '../actions/currentPage';
 
 const MessageBoard = ({
@@ -79,9 +79,9 @@ const MessageBoard = ({
         />
         <RegionList 
           user={user} 
-          // regions={dummyRegions} 
+          regions={dummyRegions} 
           // changeRegions={changeRegion} 
-          // setPage={setPage}
+          setPage={setPage}
         />   
         <RegionAdd />
       </div>
