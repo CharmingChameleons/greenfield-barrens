@@ -35,8 +35,13 @@ class MessageInput extends Component {
     return (
       <form action="" onSubmit={this.handleSubmit}>
         <div id="footer-messages" className="ui menu">
+          <div id="message-photo" className="left item">
+            <button id="photo-button" className="ui button">
+              <i className="photo icon"></i>
+            </button>
+          </div>
           <div id="message-input" className="left item">
-            <div className="ui icon input">
+            <div className="ui big icon input">
               <input
                 type="text"
                 placeholder="New Message"
