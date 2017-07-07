@@ -13,14 +13,14 @@ const MessageListItem = ({ message, user }) => {
   console.log('In MessageListItem')
   const el = message.username === user.username // change to userId
     ? <div className="own-message">
-        <div className="ui segment">
+        <div className="ui green segment">
           <span>{message.username} - {message.timestamp}</span>
           <br/>
           {message.text}
         </div>
       </div>
     : <div className="other-user-message">
-        <div className="ui segment">
+        <div className="ui blue segment">
           <span>{message.username} - {message.timestamp}</span>
           <br />
           {message.content}
