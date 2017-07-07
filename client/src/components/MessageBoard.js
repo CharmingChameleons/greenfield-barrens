@@ -67,10 +67,8 @@ const MessageBoard = ({
         />
         <ChannelList 
           user={user} 
-          channels={dummyChannels} 
           changeChannel={changeChannel} 
           setPage={setPage}
-          region={}
         />   
         <ChannelAdd />
       </div>
@@ -93,8 +91,6 @@ const MessageBoard = ({
   }
 
   const users = Array.from(new Set(messages.map(message => message.username)));
-  console.log('In MessageBoard messages', messages)
-  console.log('In MessageBoards', user)
   return (
     <div className='app'>
       {el}

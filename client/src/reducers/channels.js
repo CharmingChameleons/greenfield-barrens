@@ -18,7 +18,7 @@ const initialState = [
   }
 ];
 
-const user = (state = initialState, action) => {
+const channels = (state = initialState, action) => {
   switch (action.type) {
     case SET_CHANNELS:
       return action.channels;

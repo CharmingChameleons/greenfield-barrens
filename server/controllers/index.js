@@ -56,14 +56,25 @@ module.exports = {
 		}
 	}, 
 
-	channel: {
+	channels: {
 		get: (req, res) => {
+			console.log('Controller.channels.get', req.params.region)
+			let region = req.params.region || 'MissionNoeRegion'
+			model.getChannels(region)
+			.then((channels) => {
+				res.status(200)
+				res.json(channels)	
+			})
+			.catch((err) => {
+				res.status(500).send('Error getting channels', err);
+			})
 
 		}
 	},
 
 	region: {
 		get: (req, res) => {
+			console.log('Controller.region.get', req.params.region)
 
 		},
 

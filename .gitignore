@@ -35,3 +35,6 @@ bower_components/
 server/.DS_Store
 .DS_Store
 
+server/oauth.config.js
+
+

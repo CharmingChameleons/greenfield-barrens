@@ -151,8 +151,9 @@ module.exports = {
 		                if (user.rows.length === 0) {
 		                  console.log('could not be found')
 		                  resolve(module.exports.insertNewUser(oauthid, displayName));
-		                }
-			        	resolve(parseInt((JSON.parse(JSON.stringify(user.rows)))[0].id ));
+		                } else {
+			        		resolve(parseInt((JSON.parse(JSON.stringify(user.rows)))[0].id ));
+			        	}
 					}
 				});
 			})
@@ -168,6 +169,27 @@ module.exports = {
 					} else {
 						console.log('New region inserted sucessfully', region)
 						resolve(region)
+					}
+				})
+			}
+		)
+	},
+
+	getChannels: (region) => {
+		return new Promise (
+			(resolve, reject) => {
+				var queryString = `SELECT channels.id AS id, channels.name AS name
+									FROM channels 
+									INNER JOIN regions  
+									ON regions.id = channels.region
+									WHERE regions.name = '${region}'`
+				db.query(queryString, null, (err, data) => {
+					if (err) {
+						console.log('err getting channels for region', err);
+						reject(err)
+					} else {
+						console.log('List of Channels', JSON.parse(JSON.stringify(data.rows)))
+						resolve(JSON.parse(JSON.stringify(data.rows)))
 					}
 				})
 			}
