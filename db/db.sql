@@ -38,7 +38,8 @@ CREATE TABLE events (
 -- In creating hard coded channels, we took out foreign key references to users & areas
 CREATE TABLE channels (
   ID SERIAL PRIMARY KEY,
-  name VARCHAR NOT NULL
+  name VARCHAR NOT NULL,
+  region INTEGER REFERENCES regions (id)
   -- name VARCHAR UNIQUE NOT NULL,
   -- users INTEGER REFERENCES users (id),
   -- areas INTEGER REFERENCES areas (id)
@@ -79,7 +80,12 @@ INSERT INTO regions VALUES (DEFAULT, 'MissionNoeRegion', 37.7837366, -122.409124
 ST_Buffer(ST_GeomFromText('POINT(37.7837366 -122.4091247)'), 25, 'quad_segs=8'));
 
 -- Hard Coding the first 3 Channels into Channels Table
+<<<<<<< HEAD
 INSERT INTO channels VALUES (DEFAULT, 'General'), (DEFAULT, 'Marketplace'), (DEFAULT, 'Events');
+=======
+INSERT INTO channels VALUES (DEFAULT, 'General', 1), (DEFAULT, 'Marketplace', 1), (DEFAULT, 'Events', 1);
+
+>>>>>>> Channel in progress
 -- HR Lat & Long (37.7836076, -122.4090994); Below is Command for Hack Reactor
 -- SELECT name FROM AREAS WHERE ST_Contains(geom, ST_SetSRID(ST_MakePoint(37.7836076, -122.4090994),4326));
 
