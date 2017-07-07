@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Switch, Route, withRouter} from 'react-router-dom';
 import io from 'socket.io-client';
 
-import Navbar from './Navbar';
 import MessageBoardContainer from '../containers/MessageBoardContainer';
 import Login from './Login';
 import Signup from './Signup';

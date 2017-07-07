@@ -6,16 +6,12 @@ import { Link } from 'react-router-dom';
     use react-router for links
 */
 
-const Navbar = () => {
+const Navbar = ({user, changePage}) => {
   return (
-    <div className="navbar">
-      <span className="messages-events">
-        <Link to="/">Message Board</Link>
-      </span>
-      <span className="signup-login">
-        <Link to="/signup">Sign Up</Link>
-        <Link to="/login">Log In</Link>
-      </span>
+    <div className="ui three item menu">
+      <a className="item" onClick={ function() {changePage()} } > β </a>
+      <a className="item">{user.region}</a>
+      <a className="item">{user.username}</a>
     </div>
   );
 };
