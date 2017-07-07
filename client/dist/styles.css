@@ -75,8 +75,12 @@
   text-align: center;
 }
 
+#message-photo {
+  width: 20%;
+}
+
 #message-input {
-  width: 80%;
+  width: 60%;
 }
 
 #message-submit {
@@ -84,6 +88,11 @@
 }
 
 #message-button {
+  width: 100%;
+  height: 80%;
+}
+
+#photo-button {
   width: 100%;
   height: 80%;
 }

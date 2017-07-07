@@ -1,15 +1,17 @@
 import React from 'react';
-import {Switch, Route, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import ChannelAdd from './ChannelAdd';
 import ChannelList from './ChannelList';
-import UserList from './UserList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
+import RegionAdd from './RegionAdd';
+import RegionList from './RegionList';
+import UserList from './UserList';
 
-import { dummyChannels, dummyUsers, dummyMessages } from '../dummyData';
+import { dummyChannels, dummyUsers, dummyMessages, dummyRegions } from '../dummyData';
 import { setPage } from '../actions/currentPage';
 
 const MessageBoard = ({
@@ -22,26 +24,41 @@ const MessageBoard = ({
   getUserInfo,
   changeChannel
 }) => {
-  const changePage = function() {
-    if (currentPage.currentPage === 'landing') {
-      setPage('xlanding');
+  const openChannels = function() {
+    if (currentPage.currentPage !== 'channels') {
+      setPage('channels');
     } else {
       setPage('landing');
     }
   }
 
-  const el = currentPage.currentPage === 'landing' 
-    ? <div className="message-board">
+  const openRegions = function() {
+    if (currentPage.currentPage !== 'regions') {
+      setPage('regions');
+    } else {
+      setPage('landing');
+    }
+  }
+
+  let el;
+
+  if (currentPage.currentPage === 'landing') {
+    el =  
+      <div className="message-board">
         <Navbar 
-          changePage={changePage}
+          openChannels={openChannels}
+          openRegions={openRegions}
           user={user}
         />
         <MessageList messages={messages} user={user} />   
         <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
       </div>
-    : <div className="channel-board">
+  } else if (currentPage.currentPage === 'channels') {
+    el = 
+      <div className="channel-board">
         <Navbar 
-          changePage={changePage}
+          openChannels={openChannels}
+          openRegions={openRegions}
           user={user}
         />
         <ChannelList 
@@ -52,6 +69,23 @@ const MessageBoard = ({
         />   
         <ChannelAdd />
       </div>
+  } else if (currentPage.currentPage === 'regions') {
+    el = 
+      <div className="channel-board">
+        <Navbar 
+          openChannels={openChannels}
+          openRegions={openRegions}
+          user={user}
+        />
+        <RegionList 
+          user={user} 
+          regions={dummyRegions} 
+          // changeRegions={changeRegion} 
+          setPage={setPage}
+        />   
+        <RegionAdd />
+      </div>
+  }
 
   const users = Array.from(new Set(messages.map(message => message.username)));
   console.log('In MessageBoard messages', messages)
