@@ -23,7 +23,7 @@ const MessageListItem = ({ message, user }) => {
         <div className="ui blue segment">
           <span>{message.username} - {message.timestamp}</span>
           <br />
-          {message.content}
+          {message.text}
         </div>
       </div>;
   return (

@@ -7,9 +7,13 @@ import ChannelList from './ChannelList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
+<<<<<<< HEAD
 import RegionAdd from './RegionAdd';
 import RegionList from './RegionList';
 import UserList from './UserList';
+=======
+import Gmap from './Gmap';
+>>>>>>> With Gmap
 
 import { dummyChannels, dummyUsers, dummyMessages, dummyRegions } from '../dummyData';
 import { setPage } from '../actions/currentPage';
@@ -50,7 +54,7 @@ const MessageBoard = ({
           openRegions={openRegions}
           user={user}
         />
-        <MessageList messages={messages} user={user} />
+        <MessageList messages={messages} user={user} />   
         <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
       </div>
   } else if (currentPage.currentPage === 'channels') {
@@ -61,12 +65,13 @@ const MessageBoard = ({
           openRegions={openRegions}
           user={user}
         />
-        <ChannelList
-          user={user}
-          channels={dummyChannels}
-          changeChannel={changeChannel}
+        <ChannelList 
+          user={user} 
+          channels={dummyChannels} 
+          changeChannel={changeChannel} 
           setPage={setPage}
-        />
+          region={}
+        />   
         <ChannelAdd />
       </div>
   } else if (currentPage.currentPage === 'regions') {
@@ -113,3 +118,4 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MessageBo
 
         // <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel}/>
         // <UserList users={users} user={user} />
+        //<Gmap lat={-122.4127313} long={37.7453366} />

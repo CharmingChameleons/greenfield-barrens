@@ -6,5 +6,7 @@ import currentPage from './currentPage';
 export default combineReducers({
   messages,
   user,
-  currentPage
+  currentPage,
+  channels,
+  regions
 });
