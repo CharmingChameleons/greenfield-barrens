@@ -8,6 +8,7 @@ import UserList from './UserList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
+import Gmap from './Gmap';
 
 import { dummyChannels, dummyUsers, dummyMessages } from '../dummyData';
 import { setPage } from '../actions/currentPage';
@@ -79,3 +80,4 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MessageBo
 
         // <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel}/>
         // <UserList users={users} user={user} />
+        //<Gmap lat={-122.4127313} long={37.7453366} />
