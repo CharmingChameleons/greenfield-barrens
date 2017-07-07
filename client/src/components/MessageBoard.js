@@ -12,7 +12,6 @@ import Gmap from './Gmap';
 import RegionAdd from './RegionAdd';
 import RegionList from './RegionList';
 import UserList from './UserList';
-import Gmap from './Gmap';
 
 import { dummyChannels, dummyUsers, dummyMessages, dummyRegions } from '../dummyData';
 import { setPage } from '../actions/currentPage';
