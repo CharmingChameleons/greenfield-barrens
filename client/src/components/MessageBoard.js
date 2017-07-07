@@ -30,26 +30,26 @@ const MessageBoard = ({
     }
   }
 
-  const el = currentPage.currentPage === 'landing' 
+  const el = currentPage.currentPage === 'landing'
     ? <div className="message-board">
-        <Navbar 
+        <Navbar
           changePage={changePage}
           user={user}
         />
-        <MessageList messages={messages} user={user} />   
+        <MessageList messages={messages} user={user} />
         <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
       </div>
     : <div className="channel-board">
-        <Navbar 
+        <Navbar
           changePage={changePage}
           user={user}
         />
-        <ChannelList 
-          user={user} 
-          channels={dummyChannels} 
-          changeChannel={changeChannel} 
+        <ChannelList
+          user={user}
+          channels={dummyChannels}
+          changeChannel={changeChannel}
           setPage={setPage}
-        />   
+        />
         <ChannelAdd />
       </div>
 

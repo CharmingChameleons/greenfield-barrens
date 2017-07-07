@@ -5,7 +5,7 @@ module.exports = {
 	getAllMessages: (area) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `SELECT users.username AS username, messages.content AS content, channels.name AS channel FROM messages 
+				var queryString = `SELECT users.username AS username, messages.content AS content, channels.name AS channel FROM messages
 					INNER JOIN areas ON messages.area = areas.id
 					LEFT OUTER JOIN channels ON messages.channels = channels.id
 					LEFT OUTER JOIN users ON messages.username = users.id
@@ -87,18 +87,38 @@ module.exports = {
 		})
 	},
 
-	insertNewUser: (username) => {
+	insertNewUser: (oauthid, username) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `INSERT INTO users (username) VALUES ('${username}')
+				var queryString = `INSERT INTO users (oauthid, username) VALUES ('${oauthid}','${username}')
 								RETURNING id`
 				db.query(queryString, null, (err, user) => {
 					if (err) {
 			          	console.log('err inserting data in users table', err);
-			          	reject(err)
+			          	reject(err);
 			        } else {
 			        	console.log('User inserted successfully', user.rows)
 			        	resolve(parseInt((JSON.parse(JSON.stringify(user.rows)))[0].id));
+					}
+			});
+		})
+	},
+
+  checkOrMakeUser: (oauthid, displayName) => {
+		return new Promise (
+			(resolve, reject) => {
+				var queryString = `SELECT id FROM users WHERE oauthid = '${oauthid}'`
+				db.query(queryString, null, (err, user) => {
+					if (err) {
+			          	console.log('err checking data in users table', err);
+			          	reject(err);
+			        } else {
+			        	console.log('User found successfully', user.rows)
+                if (user.rows.length === 0) {
+                  console.log('could not be found')
+                  resolve(module.exports.insertNewUser(oauthid, displayName));
+                }
+			        	resolve(parseInt((JSON.parse(JSON.stringify(user.rows)))[0].id ));
 					}
 			});
 		})
