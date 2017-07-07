@@ -10,7 +10,6 @@
   "scripts": {
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
     "watch": "webpack -d --watch",
-    "dev": "webpack-dev-server",
     "start": "node server/index.js",
     "start-test": "nodemon server/index.js"
   },
