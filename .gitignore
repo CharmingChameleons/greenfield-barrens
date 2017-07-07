@@ -1,5 +1,8 @@
 ### node etc ###
 
+#secrets
+/server/oauth.config.js
+
 # Logs
 logs
 *.log
@@ -31,4 +34,7 @@ bower_components/
 #DS Store
 server/.DS_Store
 .DS_Store
+
+server/oauth.config.js
+
 

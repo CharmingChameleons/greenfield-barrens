@@ -22,3 +22,8 @@ export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 
 // currentPage
 export const SET_PAGE = 'SET_PAGE';
+
+// channels
+export const SET_CHANNELS = 'SET_CHANNELS'
+
+export const ADD_CHANNEL = 'ADD_CHANNEL'

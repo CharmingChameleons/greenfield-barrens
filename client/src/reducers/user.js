@@ -1,7 +1,7 @@
 import { LOG_IN, LOG_OUT, GET_USER_INFO, CHANGE_CHANNEL, UPDATE_LOCATION } from '../actions/actionTypes';
 
 const initialState = {
-  username: 'anon',
+  username: null,
   region: '... nowhere ...',
   channel: 'General'
 };

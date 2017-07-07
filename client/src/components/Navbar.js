@@ -11,7 +11,7 @@ const Navbar = ({user, openChannels, openRegions}) => {
     <div className="ui three item menu">
       <a className="item" onClick={ function() {openChannels()} } > β </a>
       <a className="item" onClick={ function() {openRegions()} }>{user.region}</a>
-      <a className="item">{user.username}</a>
+      <a href="/auth/facebook" className="item">{user.username}</a>
     </div>
   );
 };
