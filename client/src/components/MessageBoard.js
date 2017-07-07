@@ -7,6 +7,7 @@ import ChannelList from './ChannelList';
 import UserList from './UserList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
+import Navbar from './Navbar';
 
 import { dummyChannels, dummyUsers, dummyMessages } from '../dummyData';
 import { setPage } from '../actions/currentPage';
@@ -21,28 +22,28 @@ const MessageBoard = ({
   getUserInfo,
   changeChannel
 }) => {
-  console.log('new page', currentPage)
-
-  const changePage = function(pageName) {
-    setPage(pageName)
+  const changePage = function() {
+    if (currentPage.currentPage === 'landing') {
+      setPage('xlanding');
+    } else {
+      setPage('landing');
+    }
   }
 
   const el = currentPage.currentPage === 'landing' 
     ? <div className="message-board">
-        <div className="ui three item menu">
-          <a className="item" onClick={ function() {changePage('notlanding')} } > β </a>
-          <a className="active item">{user.region}</a>
-          <a className="item">{user.username}</a>
-        </div>
+        <Navbar 
+          changePage={changePage}
+          user={user}
+        />
         <MessageList messages={messages} user={user} />   
         <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
       </div>
     : <div className="channel-board">
-        <div className="ui three item menu">
-          <a className="item" onClick={ function() {changePage('landing')} }> β </a>
-          <a className="active item">{user.region}</a>
-          <a className="item">{user.username}</a>
-        </div>
+        <Navbar 
+          changePage={changePage}
+          user={user}
+        />
         <ChannelList 
           user={user} 
           channels={dummyChannels} 
