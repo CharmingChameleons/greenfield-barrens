@@ -43,7 +43,12 @@ const MessageBoard = ({
           <a className="active item">{user.region}</a>
           <a className="item">{user.username}</a>
         </div>
-        <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel} />   
+        <ChannelList 
+          user={user} 
+          channels={dummyChannels} 
+          changeChannel={changeChannel} 
+          setPage={setPage}
+        />   
         <ChannelAdd />
       </div>
 
