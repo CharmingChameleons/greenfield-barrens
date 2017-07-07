@@ -7,13 +7,11 @@ import ChannelList from './ChannelList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
-<<<<<<< HEAD
+
 import RegionAdd from './RegionAdd';
 import RegionList from './RegionList';
 import UserList from './UserList';
-=======
 import Gmap from './Gmap';
->>>>>>> With Gmap
 
 import { dummyChannels, dummyUsers, dummyMessages, dummyRegions } from '../dummyData';
 import { setPage } from '../actions/currentPage';
