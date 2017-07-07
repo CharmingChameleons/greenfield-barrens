@@ -50,7 +50,16 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
           socket.on('message', message => {
             console.log('In app socket.on.message', message)
             updateMessages(message);
+            getLocationAndUpdate(username);
+
           });
+        } else{
+            logIn(username);
+            socket.on('message', message => {
+              console.log('In app socket.on.message', message)
+              updateMessages(message);
+            });
+
           // socket.on('initialMessages', messages => {
           //   console.log('In app socket.on.initial.messages', messages)
           //   setMessages(messages);

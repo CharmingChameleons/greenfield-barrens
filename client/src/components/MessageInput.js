@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import {logIn} from '../actions/user'
+import React, { Component } from 'react';
 
 class MessageInput extends Component {
   constructor(props) {
@@ -19,21 +18,16 @@ class MessageInput extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.props.user.username === null) {
-      logIn('henri')
-      console.log(this.props.user);
-    } else {
-      const inp = this.state.input.trim();
-      if (inp) {
-        this.props.socket.emit('send', {
-          ...this.props.user,
-          text: this.state.input,
-          timestamp: new Date().toLocaleTimeString('en-us')
-        });
-        this.setState({
-          input: ''
-        });
-      }
+    const inp = this.state.input.trim();
+    if (inp) {
+      this.props.socket.emit('send', {
+        ...this.props.user,
+        text: this.state.input,
+        timestamp: new Date().toLocaleTimeString('en-us')
+      });
+      this.setState({
+        input: ''
+      });
     }
   }
 

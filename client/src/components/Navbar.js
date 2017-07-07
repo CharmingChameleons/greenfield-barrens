@@ -11,7 +11,7 @@ const Navbar = ({user, changePage}) => {
     <div className="ui three item menu">
       <a className="item" onClick={ function() {changePage()} } > β </a>
       <a className="item">{user.region}</a>
-      <a className="item">{user.username}</a>
+      <a href="/auth/facebook" className="item">{user.username}</a>
     </div>
   );
 };
