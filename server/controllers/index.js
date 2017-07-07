@@ -95,6 +95,23 @@ module.exports = {
 			)
 		},
 
+		getRegionName: (lat, long) => {
+			return new Promise (
+				(reject, resolve) => {
+					fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${GOOGLE_API_KEY}`, {
+          				method: 'GET'
+        			})
+        			.then((data) => {
+        				console.log(data[0].address_components[0])
+        				resolve(data)
+        			})
+        			.catch((err) => {
+        				reject(err)
+        			})
+				}
+			)
+		},
+
 		getPolygonCoords: (lat, long) => {
 			return new Promise(
 				(reject, resolve) => {

@@ -7,6 +7,7 @@ import ChannelList from './ChannelList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
+import Gmap from './Gmap';
 
 import RegionAdd from './RegionAdd';
 import RegionList from './RegionList';
