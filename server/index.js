@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 //App Dependencies
-const db = require('../db');
+const db = require('./models/index.js');
 const controller = require('./controllers');
 
 //auth
@@ -56,10 +56,25 @@ passport.use(new FacebookStrategy({
     callbackURL: config.facebook.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-    done(null, {
-    accessToken: accessToken,
-    profile: profile
-  });
+
+    db.checkOrMakeUser(profile.id, profile.displayName)
+    .catch((err) => {
+      console.log('user probably not user! (this should never happen)', err);
+    })
+    .then((data) => {
+      console.log(data);
+      done(null, {
+        accessToken: accessToken,
+        profile: profile,
+        id: data
+      });
+    })
+    .catch((err) => {
+      console.log('user insert failed', err);
+      done(err,null);
+    })
+
+
     // User.findOrCreate(..., function(err, user) {
     //   if (err) { return done(err); }
     //   done(null, user);
@@ -81,11 +96,8 @@ app.get('/login', function(req, res, next) {
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication
-    res.json(req.user);
-});
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' }));
 
 app.get('/logout', function(req, res){
   console.log('logging out');
@@ -93,6 +105,14 @@ app.get('/logout', function(req, res){
   res.redirect('/logintest.html');
 });
 
+app.get('/usertest', function(req, res){
+  console.log(req.user);
+  if(req.user) {
+    const username = req.user.profile.displayName;
+    res.send(username);
+  }
+  res.send();
+});
 
 
 // ---------------------------- SOCKET LOGIC ------------------------------

@@ -43,34 +43,38 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
       })
 
   const checkUsername = () => {
-    if (!username) {
-      username = prompt('Actually enter a username.');
-      checkUsername();
-    } else {
-      fetch(`/api/users/${username}`, {method: 'POST'})
-        .then(res => {
-          if (res.status === 201) {
-            logIn(username);
-            socket.on('message', message => {
-              console.log('In app socket.on.message', message)
-              updateMessages(message);
-            });
-            // socket.on('initialMessages', messages => {
-            //   console.log('In app socket.on.initial.messages', messages)
-            //   setMessages(messages);
-            // });
-            getLocationAndUpdate(username);
-          } else {
-            username = prompt('Unfortunately, that username is taken. Please try another.');
-            checkUsername();
-          }
-        });
-    }
+    fetch(`/api/users/${username}`, {method: 'POST'})
+      .then(res => {
+        if (res.status === 201) {
+          logIn(username);
+          socket.on('message', message => {
+            console.log('In app socket.on.message', message)
+            updateMessages(message);
+          });
+          // socket.on('initialMessages', messages => {
+          //   console.log('In app socket.on.initial.messages', messages)
+          //   setMessages(messages);
+          // });
+          getLocationAndUpdate(username);
+        }
+      });
+
   };
 
-  if (user.username === 'anon') {
-    username = prompt('Enter a steezy username.');
-    checkUsername();
+  if (user.username === null) {
+
+    logIn('lololol');
+    $.get( "/usertest", function( data ) {
+      if (data) {
+        username = data;
+        logIn(username);
+        getLocationAndUpdate(username);
+        checkUsername();
+      }
+    });
+
+
+        //checkUsername();
   }
 
   // <Navbar />
