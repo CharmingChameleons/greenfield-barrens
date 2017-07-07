@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import ChannelAdd from './ChannelAdd';
