@@ -38,7 +38,6 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
         return response.json()
       })
       .then((messages) => {
-        console.log('All Messages in the room', messages)
         setMessages(messages)
       })
 
@@ -48,7 +47,6 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
         if (res.status === 201) {
           logIn(username);
           socket.on('message', message => {
-            console.log('In app socket.on.message', message)
             updateMessages(message);
             getLocationAndUpdate(username);
 
@@ -56,7 +54,6 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
         } else{
             logIn(username);
             socket.on('message', message => {
-              console.log('In app socket.on.message', message)
               updateMessages(message);
             });
 
