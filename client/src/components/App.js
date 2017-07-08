@@ -25,11 +25,12 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
           method: 'PUT'
         });
       })
-      .then(res => res.text())
+      .then(res => res.json())
       .then(region => {
+        console.log('In region', region.region)
         updateLocation(region);
-        socket.emit('subscribe', region);
-        return fetch(`/api/messages/${region}`, {
+        socket.emit('subscribe', region.region);
+        return fetch(`/api/messages/${region.region}`, {
           method: 'GET'
         });
       })

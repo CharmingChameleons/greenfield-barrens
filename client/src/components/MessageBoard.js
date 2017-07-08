@@ -7,11 +7,12 @@ import ChannelList from './ChannelList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
-import Gmap from './Gmap';
 
 import RegionAdd from './RegionAdd';
 import RegionList from './RegionList';
 import UserList from './UserList';
+import Gmap from './Gmap';
+import MapAdd from './MapAdd';
 
 import { dummyChannels, dummyUsers, dummyMessages, dummyRegions } from '../dummyData';
 import { setPage } from '../actions/currentPage';
@@ -41,6 +42,7 @@ const MessageBoard = ({
       setPage('landing');
     }
   }
+
 
   let el;
 
@@ -86,6 +88,18 @@ const MessageBoard = ({
         />   
         <RegionAdd />
       </div>
+  } else if (currentPage.currentPage === 'addregion') {
+    el = 
+      <div className="channel-board">
+        <Navbar 
+          openChannels={openChannels}
+          openRegions={openRegions}
+          user={user}
+        />
+        <Gmap 
+        />
+        <MapAdd />
+      </div>
   }
 
   const users = Array.from(new Set(messages.map(message => message.username)));
@@ -112,4 +126,3 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MessageBo
 
         // <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel}/>
         // <UserList users={users} user={user} />
-        //<Gmap lat={-122.4127313} long={37.7453366} />

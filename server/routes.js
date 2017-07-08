@@ -18,11 +18,15 @@ router.post('/users/:newUsername', controller.users.post);
 //Post messages to GeoLocation
 router.put('/users/:username/:lat/:long', controller.users.put);
 
-router.get('/region/:lat/:long', controller.region.get);
+router.get('/regions/:lat/:lng', controller.regions.get);
+
+//Add new user defined region
+router.put('/regions/:lat/:lng/:radius', controller.regions.put);
 
 router.get(':lat/:long/:channel', controller.channels.get);
 
 //Get All Channel for the region
 router.get('/channels/:region', controller.channels.get)
+
 
 module.exports = router;

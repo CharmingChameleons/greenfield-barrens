@@ -10,7 +10,6 @@ import React from 'react';
 */
 
 const MessageListItem = ({ message, user }) => {
-  console.log('In MessageListItem')
   const el = message.username === user.username // change to userId
     ? <div className="own-message">
         <div className="ui green segment">

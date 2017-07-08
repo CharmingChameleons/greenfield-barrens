@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, GET_USER_INFO, CHANGE_CHANNEL, UPDATE_LOCATION } from '../actions/actionTypes';
+import { LOG_IN, LOG_OUT, GET_USER_INFO, CHANGE_CHANNEL, UPDATE_LOCATION, CHANGE_REGION } from '../actions/actionTypes';
 
 const initialState = {
   username: null,
@@ -16,7 +16,9 @@ const user = (state = initialState, action) => {
     case CHANGE_CHANNEL:
       return { ...state, channel: action.channel };
     case UPDATE_LOCATION:
-      return { ...state, region: action.location };
+      return { ...state, region: action.info.region, lat: action.info.lat, lng: action.info.lng };
+    case CHANGE_REGION:
+      return { ...state, region: action.region };  
     default:
       return state;
   }

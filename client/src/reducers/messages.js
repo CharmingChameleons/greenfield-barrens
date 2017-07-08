@@ -11,10 +11,8 @@ const initialState = [
 const messages = (state = initialState, action) => {
   switch (action.type) {
   case SET_MESSAGES:
-    console.log('In reducer setMessages');
     return action.messages;
   case UPDATE_MESSAGES:
-     //state.push(action.message)
     return [...state, action.message];
   default:
     return state;

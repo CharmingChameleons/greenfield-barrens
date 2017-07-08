@@ -2,6 +2,7 @@ const { dummyChannels, dummyUsers, dummyMessages } = require('../dummyData');
 const model = require('../models');
 const db = require('../../db');
 const GOOGLE_API_KEY = 'AIzaSyBSD6qv5TRPXsah-l2DBja5GaGjkeYrmgw';
+const request = require('request');
 
 module.exports = {
 	messages: {
@@ -32,14 +33,14 @@ module.exports = {
 				console.log('UserId in getUserId', userId)
 				queryArgs.push(userId)
 				queryArgs.push(data.text)
-				return model.getChannelId(data.channel)
-			})
-			.then((channelId) => {
-				queryArgs.push(channelId)
 				return model.getRegionId(data.region)
 			})
 			.then((regionId) => {
 				queryArgs.push(regionId)
+				return model.getChannelId(data.channel, regionId)
+			})
+			.then((channelId) => {
+				queryArgs.push(channelId)
 				//queryArgs.push(data.timestamp)
 				return model.insertNewMessage(queryArgs)
 			})
@@ -58,7 +59,6 @@ module.exports = {
 
 	channels: {
 		get: (req, res) => {
-			console.log('Controller.channels.get', req.params.region)
 			let region = req.params.region || 'MissionNoeRegion'
 			model.getChannels(region)
 			.then((channels) => {
@@ -72,42 +72,111 @@ module.exports = {
 		}
 	},
 
-	region: {
+	regions: {
 		get: (req, res) => {
-			console.log('Controller.region.get', req.params.region)
+			model.findRegion(req.params.lat, req.params.lng)
+			.then((regions) => {
+				res.status(200)
+				res.json(regions)
+			})
+			.catch((err) => {
+				res.status(500).send('Error getting channels', err);	
+			})
 
+		},
+
+		put: (req, res) => {
+			console.log('reached')
+			var userRegionName = ''
+			var userLat = req.params.lat
+			var userLong = req.params.lng
+			var radius = req.params.radius
+			module.exports.regions.getRegionName(userLat, userLong)
+	    	.then((response) => {
+	    		userRegionName = response
+	    		return model.insertNewRegion(userRegionName, userLat, userLong, radius)
+	    	})
+	    	.then((regionId) => {
+	    		userRegionID = regionId
+	    		return model.insertStdChannels(userRegionID)
+	    	})
+	    	.then((channels) => {
+	    		res.status(201).send(JSON.stringify(userRegionID));
+	    	})
+	    	.catch((err) => {
+	    		console.log('Err in adding region', typeof err.code)
+	    		if (err.code === '23505') {
+	    			res.sendStatus(406)
+	    		} else {
+	    			res.sendStatus(500);
+	    		}
+	    	})
 		},
 
 		getRegionName: (lat, long) => {
 			return new Promise (
-				(reject, resolve) => {
-					fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${GOOGLE_API_KEY}`, {
-          				method: 'GET'
-        			})
-        			.then((data) => {
-        				console.log(data[0].address_components[0])
-        				resolve(data)
-        			})
-        			.catch((err) => {
-        				reject(err)
+				(resolve, reject) => {
+					request.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${GOOGLE_API_KEY}`, (err, response, body) => {
+						if (err) {
+							reject(err)
+						} else {
+							var info = JSON.parse(body).results[0].address_components[0].long_name
+							console.log('In getRegionName', info)
+        					resolve(info)
+						}
         			})
 				}
 			)
 		},
 
-		getRegionName: (lat, long) => {
+		updateUserRegion: (userRegionName, userRegionID, userLat, userLong) => {
+			console.log('In updateUserRegion')
 			return new Promise (
-				(reject, resolve) => {
-					fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${GOOGLE_API_KEY}`, {
-          				method: 'GET'
-        			})
-        			.then((data) => {
-        				console.log(data[0].address_components[0])
-        				resolve(data)
-        			})
-        			.catch((err) => {
-        				reject(err)
-        			})
+				(resolve, reject) => {
+					model.updateUserRegion(userRegionID, userLat, userLong)
+					.then((data) => {
+				  		console.log('successfully updated user');
+				  		var temp = {
+				  			region: userRegionName,
+				  			lat: userLat,
+				  			lng: userLong
+				  		}
+				  		console.log('sending userdata', temp)
+					    //res.status(201).send(JSON.stringify(temp));
+					    resolve(temp)
+				  	})
+				  	.catch((err) => {
+				  		console.log('err updating the user record', err);
+					    reject(err)
+				  	});
+				}
+			)
+		},
+
+		addNewRegion: (userRegionName, userLat, userLong, radius) => {
+			return new Promise (
+				(resolve, reject) => {
+					module.exports.regions.getRegionName(userLat, userLong)
+			    	.then((response) => {
+			    		console.log('In regions', response)
+			    		userRegionName = response
+			    		return model.insertNewRegion(userRegionName, userLat, userLong, radius)
+			    	})
+			    	.then((regionId) => {
+	    				userRegionID = regionId
+	    				return model.insertStdChannels(userRegionID)
+	    			})
+			    	.then((channels) => {
+			    		console.log('region added successfully', channels)
+			    		return module.exports.regions.updateUserRegion(userRegionName, userRegionID, userLat, userLong)
+			    	})
+			    	.then((data) => {
+			    		resolve(data)
+			    	})
+			    	.catch((err) => {
+			    		console.log(err)
+			    		reject(err);
+			    	})
 				}
 			)
 		},
@@ -129,7 +198,7 @@ module.exports = {
 		put: (req, res) => {
 		  	const userLat = req.params.lat;
 		  	const userLong = req.params.long;
-		  	const radius = req.params.radius || 25;
+		  	const radius = req.params.radius || 2;
 		  	let userRegionID;
 		  	let userRegionName;
 		  	console.log('In Users post')
@@ -146,23 +215,16 @@ module.exports = {
 			      	//at this point we have the id and name
 			      	//update the users table with the id of the region that user is in
 			      	//send the name of the region the user was placed in
-			      	return model.updateUserRegion(userRegionID)
+			      	module.exports.regions.updateUserRegion(userRegionName, userRegionID, userLat, userLong)
+			      	.then((data) => {
+			      		res.status(201).send(JSON.stringify(data));
+			      	})
 			    } else {
 			    	//Create new region
-			    	var queryString = `INSERT INTO regions VALUES (DEFAULT, ${userRegionName}, 
-			    	${userLat}, ${userLong}, ${radius}, 
-			    	ST_Buffer(ST_GeomFromText('POINT(${userLat} ${userLong})'), ${radius}, 'quad_segs=8'));`
 			    	//Get the region name
-			    	module.exports.region.getRegionName(userLat, userLong)
-			    	.then((response) => {
-			    		console.log(JSON.parse(response.results[0].address_components[0]))
-			    		userRegionName = response
-			    		return model.insertNewRegion(queryString)
-			    	})
-			    	.then((regionId) => {
-			    		console.log('region added successfully')
-			    		userRegionID = regionId
-			    		return model.updateUserRegion(userRegionID) 
+			    	module.exports.regions.addNewRegion(userRegionName, userLat, userLong, radius)
+			    	.then((data) => {
+			    		res.status(201).send(JSON.stringify(data));
 			    	})
 			    	.catch((err) => {
 			    		console.log(err)
@@ -170,14 +232,6 @@ module.exports = {
 			    	})
 			    }
 		  	})
-		  	.then((data) => {
-		  		console.log('successfully updated user');
-			    res.status(201).send(`${userRegionName}`);
-		  	})
-		  	.catch((err) => {
-		  		console.log('err updating the user record', err);
-			    res.sendStatus(500);
-		  	});
 		},
 
 		post: (req, res) => {
@@ -189,7 +243,7 @@ module.exports = {
 			    	}
 			    	const usernames = results.rows.map(rowObj => rowObj.username);
 			    	if (usernames.includes(newUsername)) {
-			      		res.status(406).send('username already taken');
+			      		res.status(201).send('username already taken');
 			    	} else {
 			      		db.query(`INSERT INTO users VALUES (DEFAULT, '${newUsername}', null, null);`, null, (err, resultsOfInsertion) => {
 			        		if (err) {

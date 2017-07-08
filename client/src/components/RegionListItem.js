@@ -1,15 +1,16 @@
 import React from 'react';
 
-const RegionListItem = ({ user, setPage, region } ) => {
+const RegionListItem = ({ user, setPage, region, changeRegion } ) => {
   return (
     <div
       className='ui segment' 
       onClick= { 
-        function() { 
+        function() {
+          changeRegion(region.name)
           setPage('landing');
         } 
       }>
-      {region.region}
+      {region.name}
     </div>
   );
 };
