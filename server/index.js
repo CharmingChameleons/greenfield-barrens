@@ -12,7 +12,7 @@ const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-var config;
+let config;
 if (process.env.CLIENT_ID === undefined) {
   config = require('./oauth.config.js');
 }
