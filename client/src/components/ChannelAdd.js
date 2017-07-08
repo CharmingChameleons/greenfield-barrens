@@ -18,6 +18,8 @@ import { setPage } from '../actions/currentPage';
 
 import { addRegion, setRegions, getRegion } from '../actions/regions';
 
+import { addChannel } from '../actions/channels';
+
 class ChannelAdd extends React.Component {
 	constructor(props) {
 		super(props)
@@ -36,7 +38,10 @@ class ChannelAdd extends React.Component {
 
 	addChannel() {
 		var r = this.props.channels
-		console.log('In Add Channel', this.props)
+		console.log('In Add Channel', r, this.state.value)
+		this.setState({
+			value: ''
+		})
 		fetch(`/api/channels/${this.props.user.region}/${this.state.value}`, {
           method: 'PUT'
         })
@@ -46,9 +51,12 @@ class ChannelAdd extends React.Component {
         		this.setState({
         			error: 'Channel already exists'
         		})
-        	} else {
-        		console.log('Channel added successfully')
-        		this.props.setPage('channels', response)
+        	} else { 
+        		response.json()
+        		.then((channel) => {
+        			console.log('Channel added successfully', channel)
+        			this.props.addChannel(channel)
+        		})
         	}
         })
 	}
@@ -61,7 +69,7 @@ class ChannelAdd extends React.Component {
 
 	render() {
 		return (
-		    <form action="">
+		    <form action="" onSubmit={this.addChannel}>
 	        <div id="footer-messages" className="ui menu">
 	          <div id="channel-input" className="item">
 	            <div className="ui big icon input">
@@ -69,13 +77,13 @@ class ChannelAdd extends React.Component {
 	                type="text"
 	                placeholder="New Channel"
 	                onChange={this.handleChange}
-	                value={this.state.input}
+	                value={this.state.value}
 	              />
 	            </div>
 	          </div>
 	          <div id="channel-submit" className="right borderless item">
 	            <button id="channel-button" className="ui button">
-	            <i className="ui large plus icon channel-button" onClick={this.addChannel} ></i>
+	            <i className="ui large plus icon channel-button" ></i>
 	            </button>
 	          </div>
 	        </div>
@@ -103,6 +111,9 @@ const mapDispatchToProps = dispatch => ({
   },
   getRegion: region => {
   	dispatch(getRegion(region));
+  },
+  addChannel: channel => {
+  	dispatch(addChannel(channel));
   }
 });
 

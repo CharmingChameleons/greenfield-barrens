@@ -72,13 +72,14 @@ module.exports = {
 			let newChannel = req.params.newChannel
 			model.getRegionId(regionName)
 			.then ((regionId) => {
-				return model.addChannel(regionId, channel)
+				return model.addChannel(regionId, newChannel)
 			})
-			.then((channels) => {
-	    		res.status(201).send(JSON.stringify(regionName));
+			.then((channel) => {
+				console.log('New Channel added succesfully', channel)
+	    		res.status(201).send(JSON.stringify(channel))
 	    	})
 	    	.catch((err) => {
-	    		console.log('Err in adding channel', typeof err.code)
+	    		console.log('Err in adding channel', err)
 	    		if (err.code === '23505') {
 	    			res.sendStatus(406)
 	    		} else {
@@ -136,7 +137,7 @@ module.exports = {
 						if (err) {
 							reject(err)
 						} else {
-							var info = JSON.parse(body).results[0].address_components[0].long_name
+							var info = `${JSON.parse(body).results[0].address_components[0].long_name} ${JSON.parse(body).results[0].address_components[1].long_name} ${JSON.parse(body).results[0].address_components[2].long_name}`
 							console.log('In getRegionName', info)
         					resolve(info)
 						}
