@@ -53,7 +53,7 @@ app.use(passport.session());
 passport.use(new FacebookStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: 'http://127.0.0.1:8000/auth/facebook/callback'
+    callbackURL: process.env.FB_CALLBACK
   },
   function(accessToken, refreshToken, profile, done) {
 
