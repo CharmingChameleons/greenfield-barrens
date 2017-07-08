@@ -1,8 +1,13 @@
 const { dummyChannels, dummyUsers, dummyMessages } = require('../dummyData');
 const model = require('../models');
 const db = require('../../db');
-const GOOGLE_API_KEY = 'AIzaSyBSD6qv5TRPXsah-l2DBja5GaGjkeYrmgw';
 const request = require('request');
+
+let googleKey;
+if (process.env.GOOGLE_API_KEY === undefined) {
+	googleKey = require('./googleKey');
+}
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || googleKey;
 
 module.exports = {
 	messages: {

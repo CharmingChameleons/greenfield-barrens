@@ -28,9 +28,9 @@ class MessageList extends React.Component {
         )
       : 
         <div>
-          <h1 className="message-welcome"> 
+          <h4 className="message-welcome"> 
             <br/><br/> Get the conversation going! 
-          </h1>
+          </h4>
         </div>;
   }
 
