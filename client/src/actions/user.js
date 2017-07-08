@@ -20,9 +20,9 @@ export const changeChannel = channel => ({
   channel
 });
 
-export const updateLocation = location => ({
+export const updateLocation = info => ({
   type: UPDATE_LOCATION,
-  location
+  info
 });
 
 

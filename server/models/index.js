@@ -89,10 +89,10 @@ module.exports = {
 		})
 	},
 
-	updateUserRegion: (userRegionID) => {
+	updateUserRegion: (userRegionID, userLat, userLong) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `UPDATE users SET regions=${userRegionID}`
+				var queryString = `UPDATE users SET regions=${userRegionID}, lat=${userLat}, lng=${userLong} `
 				db.query(queryString, null, (err, result) => {
 		        	if (err) {
 		        		reject(err)
@@ -195,4 +195,21 @@ module.exports = {
 			}
 		)
 	}
+
+	// getRegions: (region, lat, lng) => {
+	// 	return new Promise(
+	// 		var queryString = `SELECT regions.id, regions.name
+	// 							FROM regions
+	// 							WHERE `
+	// 		db.query(queryString, null, (err, data) => {
+	// 			if (err) {
+	// 				console.log('err getting channels for region', err);
+	// 				reject(err)	
+	// 			} else {
+	// 				console.log('List of Channels', JSON.parse(JSON.stringify(data.rows)))
+	// 				resolve(JSON.parse(JSON.stringify(data.rows)))	
+	// 			}
+	// 		})
+	// 	)
+	// }
 }

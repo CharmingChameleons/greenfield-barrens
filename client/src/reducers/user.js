@@ -16,7 +16,7 @@ const user = (state = initialState, action) => {
     case CHANGE_CHANNEL:
       return { ...state, channel: action.channel };
     case UPDATE_LOCATION:
-      return { ...state, region: action.location };
+      return { ...state, region: action.info.region, lat: action.info.lat, lng: action.info.lng };
     default:
       return state;
   }

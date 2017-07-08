@@ -17,19 +17,23 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
   const getLocationAndUpdate = (username) =>
     new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
       .then(pos => {
-        const lat = pos.coords.latitude;
-        const lon = pos.coords.longitude;
-
+        let lat = pos.coords.latitude;
+        let lon = pos.coords.longitude;
+        lat = 51.5085
+        lon = -0.1257 
         // return fetch(`https://vast-tor-38918.herokuapp.com/api/messages/${lat}/${lon}`);
         return fetch(`/api/users/${username}/${lat}/${lon}`, {
           method: 'PUT'
         });
       })
-      .then(res => res.text())
-      .then(region => {
-        updateLocation(region);
-        socket.emit('subscribe', region);
-        return fetch(`/api/messages/${region}`, {
+      .then(res => {
+        return res.text()
+      })
+      .then(txt => {
+        var info = JSON.parse(txt)
+        updateLocation(info);
+        socket.emit('subscribe', info.region);
+        return fetch(`/api/messages/${info.region}`, {
           method: 'GET'
         });
       })
@@ -56,11 +60,6 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
             socket.on('message', message => {
               updateMessages(message);
             });
-
-          // socket.on('initialMessages', messages => {
-          //   console.log('In app socket.on.initial.messages', messages)
-          //   setMessages(messages);
-          // });
           getLocationAndUpdate(username);
         }
       });
@@ -111,8 +110,8 @@ const mapDispatchToProps = dispatch => ({
   setMessages: messages => {
     dispatch(setMessages(messages));
   },
-  updateLocation: location => {
-    dispatch(updateLocation(location));
+  updateLocation: info => {
+    dispatch(updateLocation(info));
   }
 });
 

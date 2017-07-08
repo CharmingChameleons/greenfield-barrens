@@ -9,7 +9,7 @@ const RegionListItem = ({ user, setPage, region } ) => {
           setPage('landing');
         } 
       }>
-      {region.region}
+      {region.name}
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import React from 'react';
+import {Switch, Route, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';;
 // import {withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
 
 class Gmap extends React.Component {
@@ -7,8 +9,8 @@ class Gmap extends React.Component {
 
     this.state = {
       center: {
-        lat: 37.7453366,
-        lng: -122.4127313
+        lat: parseInt(this.props.user.lat),
+        lng: parseInt(this.props.user.lng)
       },
       radius: 25
     }
@@ -24,7 +26,7 @@ class Gmap extends React.Component {
   componentDidMount() {
 
     this.map = new window.google.maps.Map(document.getElementById('mapInside'), {
-      zoom: 18,
+      zoom: 15,
       center: this.state.center,
       mapTypeId: 'roadmap'
     });
@@ -67,15 +69,25 @@ class Gmap extends React.Component {
 
   render() {
     var style = {
-      height: '50%'
+      height: '80%',
+      width: '80%'
     }
     return (
       <div id='mapInside' style={style} >
-        <button name="AddRegion">+</button>
       </div>
     )
   }
 }
 
-export default Gmap;
+const mapStateToProps = ({user}) => ({
+  user
+});
+
+const mapDispatchToProps = dispatch => ({
+  logIn: username => {
+    dispatch(logIn(username));
+  },
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Gmap));
     
