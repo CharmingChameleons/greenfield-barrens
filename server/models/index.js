@@ -84,7 +84,7 @@ module.exports = {
 	findRegion: (lat, lng) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, ST_POINT(${lat}, ${lng}), 4326	);`
+				var queryString = `SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, ST_POINT(${lat}, ${lng}));`
 				db.query(queryString, null, (err, regions) => {
 					if (err) {
 			          	console.log('err retrieving Region from db', err);
@@ -172,7 +172,7 @@ module.exports = {
 			(resolve, reject) => {
 				var queryString = `INSERT INTO regions VALUES (DEFAULT, '${userRegionName}', 
 			    		${userLat}, ${userLong}, ${radius}, 
-			    		ST_Buffer(ST_GeomFromText('POINT(${userLat} ${userLong})', 4326), ${radius}, 'quad_segs=8')) RETURNING id;`
+			    		ST_Buffer(ST_GeomFromText('POINT(${userLat} ${userLong})'), ${radius}, 'quad_segs=8')) RETURNING id;`
 				db.query(queryString, null, (err, region) => {
 					if (err) {
 						console.log('err inserting into regions table', err);
