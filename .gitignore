@@ -2,6 +2,7 @@
 
 #secrets
 /server/oauth.config.js
+/server/controllers/googleKey.js
 
 # Logs
 logs
