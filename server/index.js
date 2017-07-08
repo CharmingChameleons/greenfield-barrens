@@ -12,7 +12,7 @@ const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-const config = require('./oauth.config.js');
+// const config = require('./oauth.config.js');
 
 
 //Router
@@ -51,8 +51,8 @@ app.use(passport.session());
 
 
 passport.use(new FacebookStrategy({
-    clientID: process.env.CLIENT_ID || config.facebook.clientID,
-    clientSecret: process.env.CLIENT_SECRET || config.facebook.clientSecret,
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL: 'http://127.0.0.1:8000/auth/facebook/callback'
   },
   function(accessToken, refreshToken, profile, done) {
