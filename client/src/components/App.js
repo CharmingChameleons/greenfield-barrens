@@ -69,7 +69,7 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
 
   if (user.username === null) {
 
-    logIn('lololol');
+    logIn('Login');
     $.get( "/usertest", function( data ) {
       if (data) {
         username = data;
@@ -78,8 +78,6 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
         checkUsername();
       }
     });
-
-
         //checkUsername();
   }
 

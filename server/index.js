@@ -51,9 +51,9 @@ app.use(passport.session());
 
 
 passport.use(new FacebookStrategy({
-    clientID: config.facebook.clientID,
-    clientSecret: config.facebook.clientSecret,
-    callbackURL: config.facebook.callbackURL
+    clientID: process.env.CLIENT_ID || config.facebook.clientID,
+    clientSecret: process.env.CLIENT_SECRET || config.facebook.clientSecret,
+    callbackURL: 'http://127.0.0.1:8000/auth/facebook/callback'
   },
   function(accessToken, refreshToken, profile, done) {
 
@@ -102,7 +102,7 @@ app.get('/auth/facebook/callback',
 app.get('/logout', function(req, res){
   console.log('logging out');
   req.logout();
-  res.redirect('/logintest.html');
+  res.redirect('/');
 });
 
 app.get('/usertest', function(req, res){
