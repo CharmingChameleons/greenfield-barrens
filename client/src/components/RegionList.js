@@ -8,13 +8,6 @@ import { changeRegion } from '../actions/user';
 
 import { setRegions } from '../actions/regions';
 
-/*
-TODOS:
-  add onClick event for changing channel
-  hover-over styling
-  styling for current room
-*/
-
 class RegionList extends React.Component{
   constructor(props) {
     super(props)
@@ -35,7 +28,7 @@ class RegionList extends React.Component{
   render() {
     if (this.props.regions.length > 0) {
       return (
-        <div className="channel-list">
+        <div className="channel-body">
           <div></div>
           <div className="ui center aligned large header">Regions</div>
             <div className="channel-list">
