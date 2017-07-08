@@ -13,40 +13,33 @@ import {logIn, updateLocation} from '../actions/user';
 const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages}) => {
   const socket = io();
   let username;
-  let lat;
-  let lon;
 
-  const getLocationAndUpdate = (username) => {
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-        .then(pos => {
-          lat = pos.coords.latitude;
-          lon = pos.coords.longitude;
-          // return fetch(`https://vast-tor-38918.herokuapp.com/api/messages/${lat}/${lon}`);
-          return fetch(`/api/users/${username}/${lat}/${lon}`, {
-            method: 'PUT'
-          });
-        })
-        .then(res => {
-          return res.text()
-        })
-        .then(txt => {
-          var info = JSON.parse(txt)
-          updateLocation(info);
-          socket.emit('subscribe', info.region);
-          return fetch(`/api/messages/${info.region}`, {
-            method: 'GET'
-          });
-        })
-        .then((response) => {
-          console.log('in the room')
-          return response.json()
-        })
-        .then((messages) => {
-          setMessages(messages)
-        })
+  const getLocationAndUpdate = (username) =>
+    new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
+      .then(pos => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+
+        // return fetch(`https://vast-tor-38918.herokuapp.com/api/messages/${lat}/${lon}`);
+        return fetch(`/api/users/${username}/${lat}/${lon}`, {
+          method: 'PUT'
+        });
       })
-  }
+      .then(res => res.text())
+      .then(region => {
+        updateLocation(region);
+        socket.emit('subscribe', region);
+        return fetch(`/api/messages/${region}`, {
+          method: 'GET'
+        });
+      })
+      .then((response) => {
+        console.log('in the room')
+        return response.json()
+      })
+      .then((messages) => {
+        setMessages(messages)
+      })
 
   const checkUsername = () => {
     fetch(`/api/users/${username}`, {method: 'POST'})
@@ -63,6 +56,11 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
             socket.on('message', message => {
               updateMessages(message);
             });
+
+          // socket.on('initialMessages', messages => {
+          //   console.log('In app socket.on.initial.messages', messages)
+          //   setMessages(messages);
+          // });
           getLocationAndUpdate(username);
         }
       });
@@ -71,7 +69,7 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
 
   if (user.username === null) {
 
-    logIn('Login');
+    logIn('lololol');
     $.get( "/usertest", function( data ) {
       if (data) {
         username = data;
@@ -80,21 +78,10 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
         checkUsername();
       }
     });
+
+
         //checkUsername();
   }
-
-  // else {
-  //   fetch(`/api/messages/${user.region}`, {
-  //           method: 'GET'
-  //   })
-  //   .then((response) => {
-  //     console.log('in the room')
-  //     return response.json()
-  //   })
-  //   .then((messages) => {
-  //     setMessages(messages)
-  //   })
-  // }
 
   // <Navbar />
   return (
@@ -126,8 +113,8 @@ const mapDispatchToProps = dispatch => ({
   setMessages: messages => {
     dispatch(setMessages(messages));
   },
-  updateLocation: info => {
-    dispatch(updateLocation(info));
+  updateLocation: location => {
+    dispatch(updateLocation(location));
   }
 });
 
