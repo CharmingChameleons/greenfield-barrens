@@ -217,7 +217,26 @@ module.exports = {
 
 				db.query(queryString, null, (err, data) => {
 					if (err) {
-						console.log('err inserting channels', err);
+						console.log('err inserting standard channels', err);
+						reject(err)
+					} else {
+						console.log('List of Channels', JSON.parse(JSON.stringify(data.rows)))
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
+	},
+
+	addChannel: (regionId, newChannel) => {
+		return new Promise (
+			(resolve, reject) => {
+				var queryString = `INSERT INTO channels VALUES
+								   (DEFAULT, '${newChannel}, ${regionId}) RETURNING id;`
+
+				db.query(queryString, null, (err, data) => {
+					if (err) {
+						console.log('err inserting new channel', err);
 						reject(err)
 					} else {
 						console.log('List of Channels', JSON.parse(JSON.stringify(data.rows)))

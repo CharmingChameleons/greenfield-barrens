@@ -65,6 +65,26 @@ module.exports = {
 				res.status(500).send('Error getting channels', err);
 			})
 
+		},
+
+		put: (req, res) => {
+			let regionName = req.params.region || 'MissionNoeRegion'
+			let newChannel = req.params.newChannel
+			model.getRegionId(regionName)
+			.then ((regionId) => {
+				return model.addChannel(regionId, channel)
+			})
+			.then((channels) => {
+	    		res.status(201).send(JSON.stringify(regionName));
+	    	})
+	    	.catch((err) => {
+	    		console.log('Err in adding channel', typeof err.code)
+	    		if (err.code === '23505') {
+	    			res.sendStatus(406)
+	    		} else {
+	    			res.sendStatus(500);
+	    		}
+	    	})
 		}
 	},
 

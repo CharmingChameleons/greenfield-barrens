@@ -26,7 +26,10 @@ router.put('/regions/:lat/:lng/:radius', controller.regions.put);
 router.get(':lat/:long/:channel', controller.channels.get);
 
 //Get All Channel for the region
-router.get('/channels/:region', controller.channels.get)
+router.get('/channels/:region', controller.channels.get);
+
+//Add Channel for a given region
+router.put('/channels/:region/:newChannel', controller.channels.put)
 
 
 module.exports = router;
