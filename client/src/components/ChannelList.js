@@ -32,6 +32,7 @@ class ChannelList extends React.Component {
   render() {
     return (
       <div className="channel-list">
+        <div></div>
         <div className="ui center aligned large header">Channels</div>
         <div className="channel-list">
           <div className="ui piled segments ">

@@ -20,10 +20,10 @@ class RegionAdd extends React.Component {
 
 	render() {
 		return (
-			    <div id='footer-channels'>
-			      <i className="ui large plus icon channel-button" onClick={this.addRegion}></i>
-			    </div>
-  		);
+	    <div id='footer-channels'>
+	      <i className="ui large plus icon channel-button" onClick={this.addRegion}></i>
+	    </div>
+		);
 	}
 } 
 

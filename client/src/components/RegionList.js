@@ -6,7 +6,7 @@ import RegionListItem from './RegionListItem';
 
 import { changeRegion } from '../actions/user'; 
 
-import {setRegions} from '../actions/regions';
+import { setRegions } from '../actions/regions';
 
 /*
 TODOS:
@@ -36,6 +36,7 @@ class RegionList extends React.Component{
     if (this.props.regions.length > 0) {
       return (
         <div className="channel-list">
+          <div></div>
           <div className="ui center aligned large header">Regions</div>
             <div className="channel-list">
               <div className="ui piled segments ">
