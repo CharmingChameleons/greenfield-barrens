@@ -8,13 +8,19 @@
   - Arthur Liou (@artliou)
   - Brian Wong (@bwong858)
 
+## Tactful Tetherball
+
+  - Shi-Hao Hong
+  - Henri Pietila
+  - Priyanka Shah
+
 ## Table of Contents
 
 1. [Usage](#Usage)
-1. [Geo-Location Notes] (#Geo-Location Notes)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
+2. [Geo-Location Notes] (#Geo-Location Notes)
+3. [Requirements](#requirements)
+4. [Development](#development)
+5. [Installing Dependencies](#installing-dependencies)
 
 ## Usage
 
@@ -109,8 +115,10 @@ Some PostGIS Resources:
 
 - Postgresql 9.1.x
 - PostGIS
+- Heroku
 
 ## Development
+
 
 ### Installing Dependencies
 
@@ -119,3 +127,5 @@ From within the root directory:
 npm install pg
 
 brew install postgis
+
+yarn install

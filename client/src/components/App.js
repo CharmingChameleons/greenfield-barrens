@@ -18,7 +18,6 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
         const lat = pos.coords.latitude;
         const lon = pos.coords.longitude;
 
-        // return fetch(`https://vast-tor-38918.herokuapp.com/api/messages/${lat}/${lon}`);
         return fetch(`/api/users/${username}/${lat}/${lon}`, {
           method: 'PUT'
         });

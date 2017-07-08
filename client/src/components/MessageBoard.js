@@ -25,7 +25,8 @@ const MessageBoard = ({
   messages,
   message,
   getUserInfo,
-  changeChannel
+  changeChannel,
+  updateMessages
 }) => {
   const openChannels = function() {
     if (currentPage.currentPage !== 'channels') {
@@ -43,7 +44,6 @@ const MessageBoard = ({
     }
   }
 
-
   let el;
 
   if (currentPage.currentPage === 'landing') {
@@ -55,7 +55,7 @@ const MessageBoard = ({
           user={user}
         /> 
         <MessageList messages={messages} user={user} />   
-        <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
+        <MessageInput socket={socket} getUserInfo={getUserInfo} user={user}/>
       </div>
   } else if (currentPage.currentPage === 'channels') {
     el = 
