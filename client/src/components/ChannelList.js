@@ -13,7 +13,7 @@ TODOS:
 */
 
 class ChannelList extends React.Component {
-  constructor(props, user, channels, changeChannel, setPage, setChannels ) {
+  constructor(props) {
     super(props)
   }
 
@@ -37,10 +37,10 @@ class ChannelList extends React.Component {
           <div className="ui piled segments ">
             {this.props.channels.map(channel => 
               <ChannelListItem 
-                user={this.user} 
+                user={this.props.user} 
                 channel={channel} 
-                changeChannel={this.changeChannel} 
-                setPage={this.setPage}
+                changeChannel={this.props.changeChannel} 
+                setPage={this.props.setPage}
               />
             )}
           </div>
