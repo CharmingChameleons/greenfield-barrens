@@ -6,7 +6,7 @@ import RegionListItem from './RegionListItem';
 
 import { changeRegion } from '../actions/user'; 
 
-import {setRegions} from '../actions/regions';
+import { setRegions } from '../actions/regions';
 
 /*
 TODOS:
