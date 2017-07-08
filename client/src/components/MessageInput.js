@@ -19,7 +19,7 @@ class MessageInput extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const inp = this.state.input.trim();
-    if (inp) {
+    if (inp && this.props.user.username !== 'Login') {
       this.props.socket.emit('send', {
         ...this.props.user,
         text: this.state.input,

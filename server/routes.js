@@ -20,6 +20,9 @@ router.put('/users/:username/:lat/:long', controller.users.put);
 
 router.get('/region/:lat/:long', controller.region.get);
 
-router.get(':lat/:long/:channel', controller.channel.get);
+router.get(':lat/:long/:channel', controller.channels.get);
+
+//Get All Channel for the region
+router.get('/channels/:region', controller.channels.get)
 
 module.exports = router;

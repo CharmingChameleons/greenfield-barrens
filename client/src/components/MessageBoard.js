@@ -7,6 +7,8 @@ import ChannelList from './ChannelList';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import Navbar from './Navbar';
+import Gmap from './Gmap';
+
 import RegionAdd from './RegionAdd';
 import RegionList from './RegionList';
 import UserList from './UserList';
@@ -63,7 +65,6 @@ const MessageBoard = ({
         />
         <ChannelList 
           user={user} 
-          channels={dummyChannels} 
           changeChannel={changeChannel} 
           setPage={setPage}
         />   
@@ -88,8 +89,6 @@ const MessageBoard = ({
   }
 
   const users = Array.from(new Set(messages.map(message => message.username)));
-  console.log('In MessageBoard messages', messages)
-  console.log('In MessageBoards', user)
   return (
     <div className='app'>
       {el}
@@ -113,3 +112,4 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MessageBo
 
         // <ChannelList user={user} channels={dummyChannels} changeChannel={changeChannel}/>
         // <UserList users={users} user={user} />
+        //<Gmap lat={-122.4127313} long={37.7453366} />

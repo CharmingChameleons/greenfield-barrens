@@ -2,14 +2,17 @@
 const db = require('../../db');
 
 module.exports = {
-	getAllMessages: (area) => {
+	getAllMessages: (region) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `SELECT users.username AS username, messages.content AS content, channels.name AS channel FROM messages 
-					INNER JOIN areas ON messages.area = areas.id
+				var queryString = `SELECT users.username AS username, regions.name AS region, 
+								   channels.name AS channel, messages.content AS text, 
+								   messages.stamp AS timestamp
+					FROM messages 
+					INNER JOIN regions ON messages.regions = regions.id
 					LEFT OUTER JOIN channels ON messages.channels = channels.id
 					LEFT OUTER JOIN users ON messages.username = users.id
-					WHERE areas.name = '${area}';`
+					WHERE regions.name = '${region}';`
 				db.query(queryString, null, (err, messages) => {
 					if (err) {
 			          	console.log('err retrieving into db', err);
@@ -57,7 +60,7 @@ module.exports = {
 	getRegionId: (region) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `SELECT id from areas WHERE name = '${region}';`
+				var queryString = `SELECT id from regions WHERE name = '${region}';`
 				db.query(queryString, null, (err, messages) => {
 					if (err) {
 			          	console.log('err retrieving Regionid from db', err);
@@ -70,10 +73,41 @@ module.exports = {
 		})
 	},
 
+	findRegion: (lat, lng) => {
+		return new Promise (
+			(resolve, reject) => {
+				var queryString = `SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, ST_POINT(${lat}, ${lng}));`
+				db.query(queryString, null, (err, regions) => {
+					if (err) {
+			          	console.log('err retrieving Region from db', err);
+			          	reject(err)
+			        } else {
+			        	console.log('successfully retrieving Regionid', JSON.parse(JSON.stringify(regions.rows)));
+			        	resolve(JSON.parse(JSON.stringify(regions.rows)));
+					}
+			});
+		})
+	},
+
+	updateUserRegion: (userRegionID) => {
+		return new Promise (
+			(resolve, reject) => {
+				var queryString = `UPDATE users SET regions=${userRegionID}`
+				db.query(queryString, null, (err, result) => {
+		        	if (err) {
+		        		reject(err)
+		        	} else {
+		        		resolve(JSON.parse(JSON.stringify(result.rows)));
+		        	}
+				});
+			}
+		)
+	},
+
 	insertNewMessage: (queryArgs) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `INSERT INTO messages (username, content, channels, area) VALUES ($1, $2, $3, $4)
+				var queryString = `INSERT INTO messages (username, content, channels, regions) VALUES ($1, $2, $3, $4)
 								RETURNING id`
 				db.query(queryString, queryArgs, (err, messages) => {
 					if (err) {
@@ -87,20 +121,78 @@ module.exports = {
 		})
 	},
 
-	insertNewUser: (username) => {
+	insertNewUser: (oauthid, username) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `INSERT INTO users (username) VALUES ('${username}')
+				var queryString = `INSERT INTO users (oauthid, username) VALUES ('${oauthid}','${username}')
 								RETURNING id`
 				db.query(queryString, null, (err, user) => {
 					if (err) {
 			          	console.log('err inserting data in users table', err);
-			          	reject(err)
+			          	reject(err);
 			        } else {
 			        	console.log('User inserted successfully', user.rows)
 			        	resolve(parseInt((JSON.parse(JSON.stringify(user.rows)))[0].id));
 					}
 			});
 		})
+	},
+
+  checkOrMakeUser: (oauthid, displayName) => {
+		return new Promise (
+			(resolve, reject) => {
+				var queryString = `SELECT id FROM users WHERE oauthid = '${oauthid}'`
+				db.query(queryString, null, (err, user) => {
+					if (err) {
+			          	console.log('err checking data in users table', err);
+			          	reject(err);
+			        } else {
+			        	console.log('User found successfully', user.rows)
+		                if (user.rows.length === 0) {
+		                  console.log('could not be found')
+		                  resolve(module.exports.insertNewUser(oauthid, displayName));
+		                } else {
+			        		resolve(parseInt((JSON.parse(JSON.stringify(user.rows)))[0].id ));
+			        	}
+					}
+				});
+			})
+	},
+
+	insertNewRegion: (queryString) => {
+		return new Promise (
+			(resolve, reject) => {
+				db.query(queryString, null, (err, region) => {
+					if (err) {
+						console.log('err inserting into regions table', err);
+						reject(err)
+					} else {
+						console.log('New region inserted sucessfully', region)
+						resolve(region)
+					}
+				})
+			}
+		)
+	},
+
+	getChannels: (region) => {
+		return new Promise (
+			(resolve, reject) => {
+				var queryString = `SELECT channels.id AS id, channels.name AS name
+									FROM channels 
+									INNER JOIN regions  
+									ON regions.id = channels.region
+									WHERE regions.name = '${region}'`
+				db.query(queryString, null, (err, data) => {
+					if (err) {
+						console.log('err getting channels for region', err);
+						reject(err)
+					} else {
+						console.log('List of Channels', JSON.parse(JSON.stringify(data.rows)))
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
 	}
 }
