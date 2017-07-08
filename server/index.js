@@ -12,8 +12,9 @@ const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-// const config = require('./oauth.config.js');
-
+if (process.env.CLIENT_ID === undefined) {
+  const config = require('./oauth.config.js');
+}
 
 //Router
 let router = require('./routes.js');
@@ -49,11 +50,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 passport.use(new FacebookStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.FB_CALLBACK
+    clientID: process.env.CLIENT_ID || config.facebook.clientID,
+    clientSecret:process.env.CLIENT_SECRET || config.facebook.clientSecret,
+    callbackURL: process.env.FB_CALLBACK || config.facebook.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
 
