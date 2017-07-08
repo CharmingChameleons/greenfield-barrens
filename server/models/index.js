@@ -5,21 +5,29 @@ module.exports = {
 	getAllMessages: (region) => {
 		return new Promise (
 			(resolve, reject) => {
+				// var queryString = `SELECT users.username AS username, regions.name AS region, 
+				// 				   channels.name AS channel, messages.content AS text, 
+				// 				   messages.stamp AS timestamp
+				// 	FROM messages 
+				// 	INNER JOIN regions ON messages.regions = regions.id
+				// 	LEFT OUTER JOIN channels ON messages.channels = channels.id
+				// 	LEFT OUTER JOIN users ON messages.username = users.id
+				// 	WHERE regions.name = '${region}';`
+
 				var queryString = `SELECT users.username AS username, regions.name AS region, 
-								   channels.name AS channel, messages.content AS text, 
-								   messages.stamp AS timestamp
-					FROM messages 
-					INNER JOIN regions ON messages.regions = regions.id
+				  channels.name AS channel, messages.content AS text, 
+				  messages.stamp AS timestamp
+					FROM messages
+	 				INNER JOIN regions ON messages.regions = regions.id
 					LEFT OUTER JOIN channels ON messages.channels = channels.id
-					LEFT OUTER JOIN users ON messages.username = users.id
-					WHERE regions.name = '${region}';`
+					LEFT OUTER JOIN users ON messages.username = users.id`
 				db.query(queryString, null, (err, messages) => {
 					if (err) {
-			          	console.log('err retrieving into db', err);
-			          	reject(err)
-			        } else {
-			        	//console.log('successfully retrieving messages from message table', JSON.parse(JSON.stringify(messages.rows)));
-			        	resolve(JSON.parse(JSON.stringify(messages.rows)));
+          	console.log('err retrieving into db', err);
+          	reject(err)
+	        } else {
+	        	//console.log('successfully retrieving messages from message table', JSON.parse(JSON.stringify(messages.rows)));
+	        	resolve(JSON.parse(JSON.stringify(messages.rows)));
 					}
 			});
 		})

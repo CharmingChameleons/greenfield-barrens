@@ -21,7 +21,9 @@ class MessageList extends React.Component {
   }
 
   renderMessages() {
-    const messagesInChannel = this.props.messages.filter(message => message.channel === this.props.user.channel);
+    console.log('message', this.props.messages);
+    console.log('user', this.props.user);
+    const messagesInChannel = this.props.messages.filter(message => (message.channel === this.props.user.channel) && (message.region === this.props.user.region));
     return messagesInChannel.length
       ? messagesInChannel.map(message =>
           <MessageListItem message={message} user={this.props.user} />

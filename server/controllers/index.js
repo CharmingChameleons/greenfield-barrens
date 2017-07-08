@@ -12,12 +12,7 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || googleKey;
 module.exports = {
 	messages: {
 		get: (req, res) => {
-			// figure out which region we're looking in
-  			//retrieve all messages that have been tagged with that region
-  			//retrieve all messages tagged with general'
-  			console.log(`receiving the initial GET request with coords ${req.params.lat}, ${req.params.long}`);
-  			//retrieve all messages tagged with the region corresponding to incoming coords
-  			//res.json(dummyMessages);
+			console.log(`receiving the initial GET request with coords ${req.params.lat}, ${req.params.long}`);
 		},
 
 		getRoomMessages: (req, res) => {
@@ -56,10 +51,6 @@ module.exports = {
 				console.log('Error inserting messages')
 			})
 		},
-
-		post: () => {
-
-		}
 	}, 
 
 	channels: {
@@ -196,10 +187,6 @@ module.exports = {
 	},
 
 	users: {
-		get: () => {
-
-		},
-
 		put: (req, res) => {
 		  	const userLat = req.params.lat;
 		  	const userLong = req.params.long;
