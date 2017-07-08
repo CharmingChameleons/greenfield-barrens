@@ -1,11 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-/*
-  TODOS:
-    use react-router for links
-*/
-
 const Navbar = ({user, openChannels, openRegions}) => {
   var el;
 

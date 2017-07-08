@@ -1,14 +1,5 @@
 import React from 'react';
 
-/*
-  TODOS:
-    style username below message
-    onClick DM button, should allow DM to poster
-      optimally, prepopulate DM with "re: [message text]"
-    username instead of userId
-     <span className="meta own">{message.username} - {message.timestamp}</span>
-*/
-
 const MessageListItem = ({ message, user }) => {
   const el = message.username === user.username // change to userId
     ? <div className="own-message">

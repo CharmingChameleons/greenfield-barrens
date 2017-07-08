@@ -1,16 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import ChannelListItem from './ChannelListItem';
 
 import {setChannels} from '../actions/channels';
-/*
-TODOS:
-  add onClick event for changing channel
-  hover-over styling
-  styling for current room
-*/
 
 class ChannelList extends React.Component {
   constructor(props) {
@@ -29,9 +24,22 @@ class ChannelList extends React.Component {
     }); 
   }
 
+  scrollToBottom() {
+    const node = ReactDOM.findDOMNode(this.messagesEnd);
+    node.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   render() {
     return (
-      <div className="channel-list">
+      <div className="channel-body">
         <div></div>
         <div className="ui center aligned large header">Channels</div>
         <div className="channel-list">
@@ -45,6 +53,8 @@ class ChannelList extends React.Component {
               />
             )}
           </div>
+          <div style={{ float:"left", clear: "both" }}
+               ref={(el) => { this.messagesEnd = el; }} />
         </div>
       </div>
     );  
