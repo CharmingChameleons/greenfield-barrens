@@ -84,7 +84,7 @@ module.exports = {
 	findRegion: (lat, lng) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, ST_POINT(${lat}, ${lng}));`
+				var queryString = `SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, ST_POINT(${lat}, ${lng}), 4326	);`
 				db.query(queryString, null, (err, regions) => {
 					if (err) {
 			          	console.log('err retrieving Region from db', err);

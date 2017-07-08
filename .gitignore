@@ -3,6 +3,7 @@
 #secrets
 /server/oauth.config.js
 /server/controllers/googleKey.js
+/client/src/GOOGLEMAP_API_KEY.js
 
 # Logs
 logs
@@ -36,6 +37,6 @@ bower_components/
 server/.DS_Store
 .DS_Store
 
-server/oauth.config.js
+/server/oauth.config.js
 
 
