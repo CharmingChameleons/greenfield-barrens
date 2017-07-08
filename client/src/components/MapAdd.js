@@ -41,10 +41,14 @@ class MapAdd extends React.Component {
 
 	render() {
 		return (
-			    <div id='footer-channels'>
-			      <i className="ui large plus icon channel-button" onClick={this.addMap} ></i>
-			      <i>{this.state.error}</i>
-			    </div>
+        <div id='map-container'>
+          <div className="map-exists">
+            {this.state.error}
+          </div>
+  		    <div id='footer-map'>
+  		      <i className="ui large plus icon map-button" onClick={this.addMap} ></i> 
+  		    </div>
+        </div>
   		);
 	}
 } 
