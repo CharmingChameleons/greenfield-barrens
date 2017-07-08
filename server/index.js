@@ -12,8 +12,13 @@ const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
+
+var config;
+console.log('helhalha', process.env.CLIENT_ID);
+
 if (process.env.CLIENT_ID === undefined) {
-  const config = require('./oauth.config.js');
+  console.log('In config')
+  config = require('./oauth.config.js');
 }
 
 //Router
@@ -50,17 +55,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new FacebookStrategy({
+passport.use('facebook', new FacebookStrategy({
     clientID: process.env.CLIENT_ID || config.facebook.clientID,
     clientSecret:process.env.CLIENT_SECRET || config.facebook.clientSecret,
     callbackURL: process.env.FB_CALLBACK || config.facebook.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-
+    console.log('before check')
     db.checkOrMakeUser(profile.id, profile.displayName)
-    .catch((err) => {
-      console.log('user probably not user! (this should never happen)', err);
-    })
     .then((data) => {
       console.log(data);
       done(null, {
@@ -106,7 +108,7 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/usertest', function(req, res){
-  console.log(req.user);
+  console.log('In usertest', req.params.user);
   if(req.user) {
     const username = req.user.profile.displayName;
     res.send(username);
