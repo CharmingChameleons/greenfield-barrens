@@ -20,6 +20,8 @@ export const CHANGE_CHANNEL = 'CHANGE_CHANNEL';
 
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 
+export const CHANGE_REGION = 'CHANGE_REGION';
+
 // currentPage
 export const SET_PAGE = 'SET_PAGE';
 
@@ -32,3 +34,5 @@ export const ADD_CHANNEL = 'ADD_CHANNEL';
 export const SET_REGIONS = 'SET_REGIONS';
 
 export const ADD_REGION = 'ADD_REGION';
+
+export const GET_REGION = 'GET_REGION';

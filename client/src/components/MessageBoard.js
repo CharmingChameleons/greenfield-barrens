@@ -12,6 +12,7 @@ import RegionAdd from './RegionAdd';
 import RegionList from './RegionList';
 import UserList from './UserList';
 import Gmap from './Gmap';
+import MapAdd from './MapAdd';
 
 import { dummyChannels, dummyUsers, dummyMessages, dummyRegions } from '../dummyData';
 import { setPage } from '../actions/currentPage';
@@ -97,6 +98,7 @@ const MessageBoard = ({
         />
         <Gmap 
         />
+        <MapAdd />
       </div>
   }
 

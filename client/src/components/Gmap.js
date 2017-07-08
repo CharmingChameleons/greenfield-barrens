@@ -3,14 +3,17 @@ import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';;
 // import {withGoogleMap, GoogleMap, Marker} from 'react-google-maps';
 
+import { addRegion, setRegions, getRegion } from '../actions/regions';
+
 class Gmap extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      name: this.props.user.region,
       center: {
-        lat: parseInt(this.props.user.lat),
-        lng: parseInt(this.props.user.lng)
+        lat: parseFloat(this.props.user.lat),
+        lng: parseFloat(this.props.user.lng)
       },
       radius: 25
     }
@@ -26,7 +29,7 @@ class Gmap extends React.Component {
   componentDidMount() {
 
     this.map = new window.google.maps.Map(document.getElementById('mapInside'), {
-      zoom: 15,
+      zoom: 18,
       center: this.state.center,
       mapTypeId: 'roadmap'
     });
@@ -46,6 +49,8 @@ class Gmap extends React.Component {
       center_changed: this.centerChanged
     });
 
+    this.props.setRegions(this.state)
+
   }
 
   radiusChanged() {
@@ -53,7 +58,7 @@ class Gmap extends React.Component {
       radius: this.cityCircle.getRadius()
     })
     
-    console.log(this.state.radius)
+    this.props.setRegions(this.state)
   }
 
   centerChanged() {
@@ -64,29 +69,33 @@ class Gmap extends React.Component {
       }
     })
 
-    console.log(this.state.center)
+    this.props.setRegions(this.state)
   }
 
   render() {
     var style = {
       height: '80%',
-      width: '80%'
+      width: '100%'
     }
     return (
-      <div id='mapInside' style={style} >
-      </div>
+        <div id='mapInside' style={style} >
+        </div>
     )
   }
 }
 
-const mapStateToProps = ({user}) => ({
-  user
+const mapStateToProps = ({ user, regions }) => ({
+  user,
+  regions
 });
 
 const mapDispatchToProps = dispatch => ({
-  logIn: username => {
-    dispatch(logIn(username));
+  addRegion: region => {
+    dispatch(addRegion(region));
   },
+  setRegions: regions => {
+    dispatch(setRegions(regions));
+  }
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Gmap));

@@ -20,6 +20,9 @@ router.put('/users/:username/:lat/:long', controller.users.put);
 
 router.get('/regions/:lat/:lng', controller.regions.get);
 
+//Add new user defined region
+router.put('/regions/:lat/:lng/:radius', controller.regions.put);
+
 router.get(':lat/:long/:channel', controller.channels.get);
 
 //Get All Channel for the region

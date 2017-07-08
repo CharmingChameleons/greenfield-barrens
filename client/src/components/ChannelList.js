@@ -25,7 +25,7 @@ class ChannelList extends React.Component {
       return response.json()
     })
     .then((channels) => {
-      setChannels(channels)
+      this.props.setChannels(channels)
     }); 
   }
 

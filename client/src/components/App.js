@@ -13,37 +13,40 @@ import {logIn, updateLocation} from '../actions/user';
 const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages}) => {
   const socket = io();
   let username;
+  let lat;
+  let lon;
 
-  const getLocationAndUpdate = (username) =>
-    new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
-      .then(pos => {
-        let lat = pos.coords.latitude;
-        let lon = pos.coords.longitude;
-        lat = 51.5085
-        lon = -0.1257 
-        // return fetch(`https://vast-tor-38918.herokuapp.com/api/messages/${lat}/${lon}`);
-        return fetch(`/api/users/${username}/${lat}/${lon}`, {
-          method: 'PUT'
-        });
+  const getLocationAndUpdate = (username) => {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+        .then(pos => {
+          lat = pos.coords.latitude;
+          lon = pos.coords.longitude;
+          // return fetch(`https://vast-tor-38918.herokuapp.com/api/messages/${lat}/${lon}`);
+          return fetch(`/api/users/${username}/${lat}/${lon}`, {
+            method: 'PUT'
+          });
+        })
+        .then(res => {
+          return res.text()
+        })
+        .then(txt => {
+          var info = JSON.parse(txt)
+          updateLocation(info);
+          socket.emit('subscribe', info.region);
+          return fetch(`/api/messages/${info.region}`, {
+            method: 'GET'
+          });
+        })
+        .then((response) => {
+          console.log('in the room')
+          return response.json()
+        })
+        .then((messages) => {
+          setMessages(messages)
+        })
       })
-      .then(res => {
-        return res.text()
-      })
-      .then(txt => {
-        var info = JSON.parse(txt)
-        updateLocation(info);
-        socket.emit('subscribe', info.region);
-        return fetch(`/api/messages/${info.region}`, {
-          method: 'GET'
-        });
-      })
-      .then((response) => {
-        console.log('in the room')
-        return response.json()
-      })
-      .then((messages) => {
-        setMessages(messages)
-      })
+  }
 
   const checkUsername = () => {
     fetch(`/api/users/${username}`, {method: 'POST'})
@@ -79,6 +82,19 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
     });
         //checkUsername();
   }
+
+  // else {
+  //   fetch(`/api/messages/${user.region}`, {
+  //           method: 'GET'
+  //   })
+  //   .then((response) => {
+  //     console.log('in the room')
+  //     return response.json()
+  //   })
+  //   .then((messages) => {
+  //     setMessages(messages)
+  //   })
+  // }
 
   // <Navbar />
   return (

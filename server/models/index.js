@@ -41,17 +41,17 @@ module.exports = {
 		})
 	},
 
-	getChannelId: (channel) => {
+	getChannelId: (channel, region) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `SELECT id from channels WHERE name = '${channel}';`
-				db.query(queryString, null, (err, messages) => {
+				var queryString = `SELECT id from channels WHERE name = '${channel}' AND region = ${region};`
+				db.query(queryString, null, (err, channels) => {
 					if (err) {
 			          	console.log('err retrieving channelid from db', err);
 			          	reject(err)
 			        } else {
-			        	console.log('successfully retrieving channelid', JSON.parse(JSON.stringify(messages.rows)));
-			        	resolve(parseInt((JSON.parse(JSON.stringify(messages.rows)))[0].id));
+			        	console.log('successfully retrieving channelid', JSON.parse(JSON.stringify(channels.rows)));
+			        	resolve(parseInt((JSON.parse(JSON.stringify(channels.rows)))[0].id));
 					}
 			});
 		})
@@ -107,7 +107,7 @@ module.exports = {
 	insertNewMessage: (queryArgs) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `INSERT INTO messages (username, content, channels, regions) VALUES ($1, $2, $3, $4)
+				var queryString = `INSERT INTO messages (username, content, regions, channels) VALUES ($1, $2, $3, $4)
 								RETURNING id`
 				db.query(queryString, queryArgs, (err, messages) => {
 					if (err) {
@@ -159,16 +159,19 @@ module.exports = {
 			})
 	},
 
-	insertNewRegion: (queryString) => {
+	insertNewRegion: (userRegionName, userLat, userLong, radius) => {
 		return new Promise (
 			(resolve, reject) => {
+				var queryString = `INSERT INTO regions VALUES (DEFAULT, '${userRegionName}', 
+			    		${userLat}, ${userLong}, ${radius}, 
+			    		ST_Buffer(ST_GeomFromText('POINT(${userLat} ${userLong})'), ${radius}, 'quad_segs=8')) RETURNING id;`
 				db.query(queryString, null, (err, region) => {
 					if (err) {
 						console.log('err inserting into regions table', err);
 						reject(err)
 					} else {
-						console.log('New region inserted sucessfully', region)
-						resolve(region)
+						console.log('New region inserted sucessfully', parseInt((JSON.parse(JSON.stringify(region.rows)))[0].id));
+						resolve(parseInt((JSON.parse(JSON.stringify(region.rows)))[0].id));
 					}
 				})
 			}
@@ -194,22 +197,26 @@ module.exports = {
 				})
 			}
 		)
-	}
+	},
 
-	// getRegions: (region, lat, lng) => {
-	// 	return new Promise(
-	// 		var queryString = `SELECT regions.id, regions.name
-	// 							FROM regions
-	// 							WHERE `
-	// 		db.query(queryString, null, (err, data) => {
-	// 			if (err) {
-	// 				console.log('err getting channels for region', err);
-	// 				reject(err)	
-	// 			} else {
-	// 				console.log('List of Channels', JSON.parse(JSON.stringify(data.rows)))
-	// 				resolve(JSON.parse(JSON.stringify(data.rows)))	
-	// 			}
-	// 		})
-	// 	)
-	// }
+	insertStdChannels: (regionId) => {
+		return new Promise(
+			(resolve, reject) => {
+				var queryString = `INSERT INTO channels VALUES 
+									(DEFAULT, 'General', ${regionId}), 
+									(DEFAULT, 'Marketplace', ${regionId}), 
+									(DEFAULT, 'Events', ${regionId}) RETURNING id;`
+
+				db.query(queryString, null, (err, data) => {
+					if (err) {
+						console.log('err inserting channels', err);
+						reject(err)
+					} else {
+						console.log('List of Channels', JSON.parse(JSON.stringify(data.rows)))
+						resolve(JSON.parse(JSON.stringify(data.rows)))
+					}
+				})
+			}
+		)
+	}
 }

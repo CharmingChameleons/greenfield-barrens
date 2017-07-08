@@ -24,6 +24,8 @@ CREATE TABLE users (
   username VARCHAR NOT NULL,
   oauthid VARCHAR UNIQUE,
   regions INTEGER REFERENCES regions (id),
+  lat DOUBLE PRECISION,
+  lng DOUBLE PRECISION,
   points INTEGER,
   salt VARCHAR UNIQUE
 );
@@ -76,11 +78,11 @@ CREATE TABLE session (
 -- Hard Coding Regions into the Areas Table
 
 --INSERT INTO areas VALUES (DEFAULT, 'MissionNoeRegion', -122.4127313, 37.7453366, -122.4379927, 37.76088, ST_Polygon(ST_GeomFromText('LINESTRING(37.7453366 -122.4379927, 37.7481003 -122.415084, 37.76088 -122.4127313, 37.7607018 -122.4360408, 37.7453366 -122.4379927)'), 4326));
-INSERT INTO regions VALUES (DEFAULT, 'MissionNoeRegion', 37.7837366, -122.4091247, 25, 
-ST_Buffer(ST_GeomFromText('POINT(37.7837366 -122.4091247)'), 25, 'quad_segs=8'));
+--INSERT INTO regions VALUES (DEFAULT, 'MissionNoeRegion', 37.7837366, -122.4091247, 25, 
+--ST_Buffer(ST_GeomFromText('POINT(37.7837366 -122.4091247)'), 25, 'quad_segs=8'));
 
 -- Hard Coding the first 3 Channels into Channels Table
-INSERT INTO channels VALUES (DEFAULT, 'General', 1), (DEFAULT, 'Marketplace', 1), (DEFAULT, 'Events', 1);
+--INSERT INTO channels VALUES (DEFAULT, 'General', 1), (DEFAULT, 'Marketplace', 1), (DEFAULT, 'Events', 1);
 
 -- HR Lat & Long (37.7836076, -122.4090994); Below is Command for Hack Reactor
 -- SELECT name FROM AREAS WHERE ST_Contains(geom, ST_SetSRID(ST_MakePoint(37.7836076, -122.4090994),4326));
