@@ -53,7 +53,7 @@ const MessageBoard = ({
           openChannels={openChannels}
           openRegions={openRegions}
           user={user}
-        />
+        /> 
         <MessageList messages={messages} user={user} />   
         <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} />
       </div>

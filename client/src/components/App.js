@@ -4,8 +4,6 @@ import {Switch, Route, withRouter} from 'react-router-dom';
 import io from 'socket.io-client';
 
 import MessageBoardContainer from '../containers/MessageBoardContainer';
-import Login from './Login';
-import Signup from './Signup';
 import {updateMessages, setMessages} from '../actions/messages';
 import {logIn, updateLocation} from '../actions/user';
 
@@ -87,8 +85,6 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
     <div className="app">
       <Switch>
         <Route exact path='/' render={props => <MessageBoardContainer socket={socket} />} />
-        <Route path='/signup' component={Signup} />
-        <Route path='/login' component={Login} />
       </Switch>
     </div>
   );

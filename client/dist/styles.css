@@ -72,7 +72,18 @@
 
 .message-prompt {
   float: center;
+}
+
+.message-welcome {
+  float: center;
   text-align: center;
+}
+
+.message-welcome-body {
+  float: center;
+  text-align: center;
+  font-weight: normal;
+  font-style: italic;
 }
 
 #message-photo {

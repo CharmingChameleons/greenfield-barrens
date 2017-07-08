@@ -26,7 +26,12 @@ class MessageList extends React.Component {
       ? messagesInChannel.map(message =>
           <MessageListItem message={message} user={this.props.user} />
         )
-      : <h4 className="message-prompt"> Get the conversation going! </h4>;
+      : 
+        <div>
+          <h4 className="message-prompt"> 
+            <br/><br/> Get the conversation going! 
+          </h4>
+        </div>;
   }
 
   render() {
@@ -34,7 +39,35 @@ class MessageList extends React.Component {
     return (
       <div className="message-body">
         {this.props.user.region === '... nowhere ...'
-          ? <h4 className="message-prompt">Please wait for login...</h4>
+          ? 
+            <div> 
+              <h1 className="message-welcome"> 
+                <br/><br/> Welcome to Barrens v2! <br/>
+              </h1>
+              <div>
+                <br/>
+                  <h3 className="message-welcome-body" > 
+                  Simple. <br/>
+                  Location-based. <br/>
+                  Reliable. <br/>
+                  </h3>
+
+                  <br/>
+                  <br/>
+                  <br/>                  
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+
+
+                  <h3 className="message-welcome">
+                  Let's get started.
+                  </h3>
+              </div>
+            </div>
           : this.renderMessages() }
         <div style={{ float:"left", clear: "both" }}
              ref={(el) => { this.messagesEnd = el; }} />
