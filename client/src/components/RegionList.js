@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import RegionListItem from './RegionListItem';
 
-import { changeRegion } from '../actions/user'; 
+import { changeRegion, changeChannel } from '../actions/user'; 
 
 import { setRegions } from '../actions/regions';
 
@@ -41,6 +41,7 @@ class RegionList extends React.Component{
                     user={this.props.user} 
                     region={region} 
                     changeRegion={this.props.changeRegion}
+                    changeChannel={this.props.changeChannel}
                     setPage={this.props.setPage}
                   />
                 )}  
@@ -69,6 +70,9 @@ const mapDispatchToProps = dispatch => ({
   },
   setRegions: regions => {
     dispatch(setRegions(regions));
+  },
+  changeChannel: channel => {
+    dispatch(changeChannel(channel));
   }
 });
 
