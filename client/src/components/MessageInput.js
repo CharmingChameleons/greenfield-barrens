@@ -19,15 +19,17 @@ class MessageInput extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const inp = this.state.input.trim();
+    var tempMessage = {
+      ...this.props.user,
+      text: this.state.input,
+      timestamp: new Date().toLocaleTimeString('en-us')
+    }
     if (inp && this.props.user.username !== 'Login') {
-      this.props.socket.emit('send', {
-        ...this.props.user,
-        text: this.state.input,
-        timestamp: new Date().toLocaleTimeString('en-us')
-      });
+      //this.props.socket.emit('send', tempMessage);
       this.setState({
         input: ''
       });
+      this.props.updateMessages(tempMessage)
     }
   }
 

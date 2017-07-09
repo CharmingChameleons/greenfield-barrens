@@ -26,7 +26,7 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
       .then(region => {
         console.log('In region', region.region)
         updateLocation(region);
-        socket.emit('subscribe', region.region);
+        //socket.emit('subscribe', region.region);
         return fetch(`/api/messages/${region.region}`, {
           method: 'GET'
         });
