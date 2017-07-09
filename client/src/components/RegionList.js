@@ -22,9 +22,9 @@ class RegionList extends React.Component{
     })
     .then((regions) => {
       this.props.setRegions(regions)
-      // for (var i = 0; i < regions.length; i ++) {
-      //   this.props.socket.emit('subscribe', regions[i].name);
-      // }
+      for (var i = 0; i < regions; i ++) {
+        socket.emit('subscribe', regions[i]);
+      }
     }); 
   }
 
@@ -43,6 +43,7 @@ class RegionList extends React.Component{
                     changeRegion={this.props.changeRegion}
                     changeChannel={this.props.changeChannel}
                     setPage={this.props.setPage}
+                    socket={this.props.socket}
                   />
                 )}  
             </div>

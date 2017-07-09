@@ -131,6 +131,7 @@ io.sockets.on('connection', (socket) => {
   });
   socket.on('send', (data) => {
     console.log('received message', data);
+    console.log('Socket send', data.region)
     io.sockets.in(data.region).emit('message', data);
     controller.messages.insertNewMessage(data)
     //io.emit('message', data);
