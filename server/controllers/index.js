@@ -137,7 +137,7 @@ module.exports = {
 						if (err) {
 							reject(err)
 						} else {
-							var info = `${JSON.parse(body).results[0].address_components[0].long_name} ${JSON.parse(body).results[0].address_components[1].long_name} ${JSON.parse(body).results[0].address_components[2].long_name}`
+							var info = `${JSON.parse(body).results[0].address_components[0].long_name}, ${JSON.parse(body).results[0].address_components[1].long_name}, ${JSON.parse(body).results[0].address_components[2].long_name}`
 							console.log('In getRegionName', info)
         					resolve(info)
 						}
