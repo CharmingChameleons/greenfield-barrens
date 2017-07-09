@@ -22,6 +22,9 @@ class RegionList extends React.Component{
     })
     .then((regions) => {
       this.props.setRegions(regions)
+      // for (var i = 0; i < regions.length; i ++) {
+      //   this.props.socket.emit('subscribe', regions[i].name);
+      // }
     }); 
   }
 

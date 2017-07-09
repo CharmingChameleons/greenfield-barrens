@@ -15,7 +15,7 @@ const Navbar = ({user, openChannels, openRegions}) => {
   } else {
     el = 
       <div className="ui three item menu">
-        <a className="item" onClick={ function() {openChannels()} } > Channels </a>
+        <a className="item" onClick={ function() {openChannels()} } > Channels: {user.channel}</a>
         <a className="item" onClick={ function() {openRegions()} }>{user.region}</a>
         <a href="/logout" className="item">{user.username}</a>
       </div>

@@ -21,28 +21,29 @@ import { addRegion, setRegions, getRegion } from '../actions/regions';
 import { addChannel } from '../actions/channels';
 
 class ChannelAdd extends React.Component {
-  constructor(props) {
-    super(props)
+	constructor(props) {
+		super(props)
 
-    this.state = {
-      error: '',
-      value: ''
-    }
+		this.state = {
+			error: '',
+			value: ''
+		}
 
-    this.addChannel = this.addChannel.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-  }
+		this.addChannel = this.addChannel.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+	}
 
-  componentWillMount() {  
-  }
+	componentWillMount() {	
+	}
 
-  addChannel() {
-    var r = this.props.channels
-    console.log('In Add Channel', r, this.state.value)
-    this.setState({
-      value: ''
-    })
-    fetch(`/api/channels/${this.props.user.region}/${this.state.value}`, {
+	addChannel(e) {
+		e.preventDefault();
+		var r = this.props.channels
+		console.log('In Add Channel', r, this.state.value)
+		this.setState({
+			value: ''
+		})
+		fetch(`/api/channels/${this.props.user.region}/${this.state.value}`, {
           method: 'PUT'
         })
         .then((response) => {

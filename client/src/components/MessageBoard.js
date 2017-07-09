@@ -55,7 +55,7 @@ const MessageBoard = ({
           user={user}
         /> 
         <MessageList messages={messages} user={user} />   
-        <MessageInput socket={socket} getUserInfo={getUserInfo} user={user}/>
+        <MessageInput socket={socket} getUserInfo={getUserInfo} user={user} updateMessages={updateMessages}/>
       </div>
   } else if (currentPage.currentPage === 'channels') {
     el = 
@@ -85,6 +85,7 @@ const MessageBoard = ({
           regions={dummyRegions} 
           // changeRegions={changeRegion} 
           setPage={setPage}
+          socket={socket}
         />   
         <RegionAdd />
       </div>
