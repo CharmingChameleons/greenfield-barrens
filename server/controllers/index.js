@@ -51,7 +51,7 @@ module.exports = {
 				console.log('Error inserting messages')
 			})
 		},
-	}, 
+	},
 
 	channels: {
 		get: (req, res) => {
@@ -59,7 +59,7 @@ module.exports = {
 			model.getChannels(region)
 			.then((channels) => {
 				res.status(200)
-				res.json(channels)	
+				res.json(channels)
 			})
 			.catch((err) => {
 				res.status(500).send('Error getting channels', err);
@@ -97,7 +97,7 @@ module.exports = {
 				res.json(regions)
 			})
 			.catch((err) => {
-				res.status(500).send('Error getting channels', err);	
+				res.status(500).send('Error getting channels', err);
 			})
 
 		},
@@ -201,7 +201,7 @@ module.exports = {
 		getPolygonCoords: (lat, long) => {
 			return new Promise(
 				(reject, resolve) => {
-					var myExtent = new esri.geometry.Extent(-107,25,-92,36, new esri.SpatialReference({wkid:4326}));  
+					var myExtent = new esri.geometry.Extent(-107,25,-92,36, new esri.SpatialReference({wkid:4326}));
 				}
 			)
 		}
@@ -218,7 +218,7 @@ module.exports = {
 		  	//const userCoord = `ST_SetSRID(ST_MakePoint(${userLat}, ${userLong}),4326)`;
 		  	//SELECT ST_Buffer(ST_GeomFromText('LINESTRING(50 50,150 150,150 50)'), 10, 'endcap=round join=round');
 		  	//db.query(`SELECT id, name FROM areas WHERE ST_Contains(geom, ${userCoord});`, null, (err, result) => {
-		  	//db.query(`SELECT id, name FROM areas WHERE minlong=-122.4127313;`, null, (err, result) => {  
+		  	//db.query(`SELECT id, name FROM areas WHERE minlong=-122.4127313;`, null, (err, result) => {
 		  	model.findRegion(userLat, userLong)
 		  	.then((regions) => {
 		  		if (regions.length > 0) {

@@ -16,6 +16,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(setMessages(messages));
   },
   updateMessages: message => {
+    console.log('In Container updateMessages', message)
+
     dispatch(updateMessages(message));
   },
   updateInitialMessages: messages => {

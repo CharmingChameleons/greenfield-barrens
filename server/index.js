@@ -12,7 +12,11 @@ const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-var config;
+
+// needs to be up here for file upload?
+const siofu = require("socketio-file-upload");
+
+let config;
 if (process.env.CLIENT_ID === undefined) {
   config = require('./oauth.config.js');
 }
@@ -118,8 +122,13 @@ app.get('/usertest', function(req, res){
 
 // ---------------------------- SOCKET LOGIC ------------------------------
 const io = require('socket.io').listen(server);
+app.use(siofu.router);
 
 io.sockets.on('connection', (socket) => {
+  var uploader = new siofu();
+  uploader.dir = "./testpic";
+  uploader.listen(socket);
+
   console.log('a user has connected');
   socket.on('subscribe', (room) => {
     console.log('joining room', room);
@@ -136,4 +145,19 @@ io.sockets.on('connection', (socket) => {
     controller.messages.insertNewMessage(data)
     //io.emit('message', data);
   });
+  socket.on('sendPic', (data) => {
+    console.log('received picture', data);
+    io.sockets.in(data.region).emit('message', data);
+    //controller.messages.insertNewMessage(data)
+  })
+
+  uploader.on("saved", function(event){
+       console.log(event.file);
+   });
+
+   // Error handler:
+   uploader.on("error", function(event){
+       console.log("Error from uploader", event);
+   });
+
 });

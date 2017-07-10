@@ -1,0 +1,2 @@
+var googleKey = 'AIzaSyBSD6qv5TRPXsah-l2DBja5GaGjkeYrmgw';
+module.exports = googleKey;

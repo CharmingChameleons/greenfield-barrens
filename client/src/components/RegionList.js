@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 import RegionListItem from './RegionListItem';
 
-import { changeRegion, changeChannel } from '../actions/user'; 
+import { changeRegion, changeChannel } from '../actions/user';
 
 import { setRegions } from '../actions/regions';
 
@@ -25,7 +25,7 @@ class RegionList extends React.Component{
       for (var i = 0; i < regions; i ++) {
         socket.emit('subscribe', regions[i]);
       }
-    }); 
+    });
   }
 
   render() {
@@ -36,16 +36,16 @@ class RegionList extends React.Component{
           <div className="ui center aligned large header">Regions</div>
             <div className="channel-list">
               <div className="ui piled segments ">
-                {this.props.regions.map(region => 
-                  <RegionListItem 
-                    user={this.props.user} 
-                    region={region} 
+                {this.props.regions.map(region =>
+                  <RegionListItem
+                    user={this.props.user}
+                    region={region}
                     changeRegion={this.props.changeRegion}
                     changeChannel={this.props.changeChannel}
                     setPage={this.props.setPage}
                     socket={this.props.socket}
                   />
-                )}  
+                )}
             </div>
           </div>
         </div>
