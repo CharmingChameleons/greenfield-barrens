@@ -84,7 +84,8 @@ module.exports = {
 	findRegion: (lat, lng) => {
 		return new Promise (
 			(resolve, reject) => {
-				var queryString = `SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, ST_POINT(${lat}, ${lng}));`
+				//var queryString = `SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, 'SRID=4326;POINT(${lng} ${lat})'::geometry);`
+				var queryString = `SELECT * FROM regions WHERE ST_DWithin(regions.geom, 'SRID=4326;POINT(${lng} ${lat})'::geometry, regions.radius * 0.00001)`;
 				db.query(queryString, null, (err, regions) => {
 					if (err) {
 			          	console.log('err retrieving Region from db', err);
@@ -172,7 +173,8 @@ module.exports = {
 			(resolve, reject) => {
 				var queryString = `INSERT INTO regions VALUES (DEFAULT, '${userRegionName}', 
 			    		${userLat}, ${userLong}, ${radius}, 
-			    		ST_Buffer(ST_GeomFromText('POINT(${userLat} ${userLong})'), ${radius}, 'quad_segs=8')) RETURNING id;`
+			    		ST_Buffer(ST_GeomFromText('POINT(${userLong} ${userLat})', 4326), ${radius * 0.00001} , 'quad_segs=8')) RETURNING id;`
+
 				db.query(queryString, null, (err, region) => {
 					if (err) {
 						console.log('err inserting into regions table', err);
@@ -247,3 +249,11 @@ module.exports = {
 		)
 	}
 }
+// INSERT INTO regions VALUES (DEFAULT, 'MissionNoRegion', 37.7837366, -122.4091247, 25,
+// ST_Buffer(ST_GeomFromText('POINT(-122.4091247 37.7837366)', 4326), 0.0005, 'quad_segs=8'));
+
+
+// `SELECT * FROM regions WHERE ST_DWithin(regions.geom, 'SRID=4326;POINT(-122.0657914 37.373676)'::geometry, regions.radius * 0.00001);`
+
+
+//SELECT id, name FROM regions WHERE ST_CONTAINS(regions.geom, 'SRID=4326;POINT(-121.4091247 37.7837366)'::geometry);

@@ -49,6 +49,12 @@ class Gmap extends React.Component {
       center_changed: this.centerChanged
     });
 
+    this.marker = new window.google.maps.Marker({
+      position: this.state.center,
+      map: this.map,
+      title: this.props.user.username
+    });
+
     this.props.setRegions(this.state)
 
   }

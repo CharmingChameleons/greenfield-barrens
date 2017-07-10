@@ -26,7 +26,7 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
       .then(region => {
         console.log('In region', region.region)
         updateLocation(region);
-        //socket.emit('subscribe', region.region);
+        socket.emit('subscribe', region.region);
         return fetch(`/api/messages/${region.region}`, {
           method: 'GET'
         });
@@ -40,20 +40,21 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
       })
 
   const checkUsername = () => {
+    console.log('checkUsername called')
     fetch(`/api/users/${username}`, {method: 'POST'})
       .then(res => {
         if (res.status === 201) {
           logIn(username);
-          socket.on('message', message => {
-            updateMessages(message);
-            getLocationAndUpdate(username);
+          //socket.on('message', message => {
+           // updateMessages(message);
+            //getLocationAndUpdate(username);
 
-          });
+          //});
         } else{
             logIn(username);
-            socket.on('message', message => {
-              updateMessages(message);
-            });
+            //socket.on('message', message => {
+            //  updateMessages(message);
+            //});
 
           // socket.on('initialMessages', messages => {
           //   console.log('In app socket.on.initial.messages', messages)
@@ -78,6 +79,10 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
     });
         //checkUsername();
   }
+
+  socket.on('message', message => {
+    updateMessages(message);
+  })
 
   // <Navbar />
   return (

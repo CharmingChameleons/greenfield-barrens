@@ -25,11 +25,11 @@ class MessageInput extends Component {
       timestamp: new Date().toLocaleTimeString('en-us')
     }
     if (inp && this.props.user.username !== 'Login') {
-      //this.props.socket.emit('send', tempMessage);
+      this.props.socket.emit('send', tempMessage);
       this.setState({
         input: ''
       });
-      this.props.updateMessages(tempMessage)
+      //this.props.updateMessages(tempMessage)
     }
   }
 
