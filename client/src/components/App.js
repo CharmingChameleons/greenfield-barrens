@@ -24,7 +24,7 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
       })
       .then(res => res.json())
       .then(region => {
-        console.log('In region', region.region)
+        console.log('In region', )
         updateLocation(region);
         socket.emit('subscribe', region.region);
         return fetch(`/api/messages/${region.region}`, {
@@ -46,12 +46,11 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
         if (res.status === 201) {
           logIn(username);
 
-          socket.on('message', message => {
-            console.log(message);
-            updateMessages(message);
-            //getLocationAndUpdate(username);
-
-          //});
+          // socket.on('message', message => {
+          //   console.log(message);
+          //   updateMessages(message);
+          //  getLocationAndUpdate(username);
+        // });
         } else{
             logIn(username);
             //socket.on('message', message => {
@@ -84,7 +83,7 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
   }
 
   socket.on('message', message => {
-    updateMessages(message);
+     updateMessages(message);
   })
 
   // <Navbar />

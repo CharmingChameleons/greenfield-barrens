@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//const SocketIOFileUpload = require('socketio-file-upload');
 
 
 class MessageInput extends Component {
@@ -20,21 +21,41 @@ class MessageInput extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const inp = this.state.input.trim();
-    var tempMessage = {
-      ...this.props.user,
-      text: this.state.input,
-      timestamp: new Date().toLocaleTimeString('en-us')
-    }
-    if (inp && this.props.user.username !== 'Login') {
-      this.props.socket.emit('send', tempMessage);
+    if ( inp && this.props.user.username !== 'Login') {
+      this.props.socket.emit('send', {
+        ...this.props.user,
+        text: this.state.input,
+        timestamp: new Date().toLocaleTimeString('en-us')
+      });
       this.setState({
         input: ''
       });
     }
   }
   componentDidMount() {
-    //var uploader = new SocketIOFileUpload(this.props.socket);
-    //uploader.listenOnInput(document.getElementById("siofu_input"));
+    $('#imagefile').on('change', (e) =>{
+      //Get the first (and only one) file element
+      //that is included in the  event
+      var file = e.originalEvent.target.files[0],
+          reader = new FileReader();
+      //When the file has been read...
+      reader.onload = (evt) => {
+          //Because of how the file was read,
+          //evt.target.result contains the image in base64 format
+          //Nothing special, just creates an img element
+          //and appends it to the DOM so my UI shows
+          //that I posted an image.
+          //send the image via Socket.io
+          this.props.socket.emit('send', {
+            ...this.props.user,
+            text: '',
+            image: evt.target.result,
+            timestamp: new Date().toLocaleTimeString('en-us')
+          });
+      };
+      //And now, read the image and base64
+      reader.readAsDataURL(file);
+    });
   }
 
   render() {
@@ -42,10 +63,10 @@ class MessageInput extends Component {
       <form action="" onSubmit={this.handleSubmit}>
         <div id="footer-messages" className="ui menu">
           <div id="message-photo" className="left item">
-            <button id="photo-button" className="ui button">
+            <label htmlFor='imagefile' id="photo-button" className="ui button">
               <i className="photo icon"></i>
-              <input type="file" id="siofu_input" />
-            </button>
+            </label>
+            <input type="file" id="imagefile" style={{display: "none"}} />
           </div>
           <div id="message-input" className="left item">
             <div className="ui big icon input">
