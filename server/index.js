@@ -145,6 +145,11 @@ io.sockets.on('connection', (socket) => {
     controller.messages.insertNewMessage(data)
     //io.emit('message', data);
   });
+  socket.on('sendPic', (data) => {
+    console.log('received picture', data);
+    io.sockets.in(data.region).emit('message', data);
+    //controller.messages.insertNewMessage(data)
+  })
 
   uploader.on("saved", function(event){
        console.log(event.file);

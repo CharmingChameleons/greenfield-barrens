@@ -45,8 +45,10 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
       .then(res => {
         if (res.status === 201) {
           logIn(username);
-          //socket.on('message', message => {
-           // updateMessages(message);
+
+          socket.on('message', message => {
+            console.log(message);
+            updateMessages(message);
             //getLocationAndUpdate(username);
 
           //});
@@ -56,11 +58,12 @@ const App = ({user, messages, logIn, updateMessages, updateLocation, setMessages
             //  updateMessages(message);
             //});
 
+
           // socket.on('initialMessages', messages => {
           //   console.log('In app socket.on.initial.messages', messages)
           //   setMessages(messages);
           // });
-          getLocationAndUpdate(username);
+        //  getLocationAndUpdate(username);
         }
       });
 
@@ -110,6 +113,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateInitialMessages(messages));
   },
   setMessages: messages => {
+    console.log('setMessages', messages);
     dispatch(setMessages(messages));
   },
   updateLocation: location => {

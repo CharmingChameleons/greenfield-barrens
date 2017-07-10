@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//const SocketIOFileUpload = require('socketio-file-upload');
 
 
 class MessageInput extends Component {
@@ -20,9 +19,7 @@ class MessageInput extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(document.getElementById("siofu_input").value);
     const inp = this.state.input.trim();
-<<<<<<< 68755fda39eed06a1c7eccfc845c94fac5dbfe0d
     var tempMessage = {
       ...this.props.user,
       text: this.state.input,
@@ -30,19 +27,9 @@ class MessageInput extends Component {
     }
     if (inp && this.props.user.username !== 'Login') {
       this.props.socket.emit('send', tempMessage);
-=======
-    console.log(this.state.image);
-    if ( inp && this.props.user.username !== 'Login') {
-      this.props.socket.emit('send', {
-        ...this.props.user,
-        text: this.state.input,
-        timestamp: new Date().toLocaleTimeString('en-us')
-      });
->>>>>>> file upload?
       this.setState({
         input: ''
       });
-      //this.props.updateMessages(tempMessage)
     }
   }
   componentDidMount() {
