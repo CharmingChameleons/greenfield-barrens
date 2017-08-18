@@ -1,6 +1,6 @@
 # βarrens
 
-> Location-based chat application. Click [here] (https://www.youtube.com/watch?v=4f_3QM4cEVg&feature=youtu.be) for a video demonstration.
+> Location-based chat application. Click [here](https://www.youtube.com/watch?v=4f_3QM4cEVg&feature=youtu.be) for a video demonstration.
 
 ## Team 
 
