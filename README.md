@@ -27,7 +27,7 @@
 
 ## Usage
 
-> Some usage instructions
+> To use the application, you first log onto your account on the top right of the page. From there, you can join an existing group, or create your own based on region and size. After that, you are free to chat with other members in the group!
 
 ## Requirements
 
