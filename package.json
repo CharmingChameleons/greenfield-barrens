@@ -1,9 +1,9 @@
 {
-  "name": "legacy-barrens",
-  "version": "1.0.0",
-  "description": "",
-  "author": "",
-  "license": "",
+  "name": "βarrens",
+  "version": "2.0.0",
+  "description": "βarrens is a location-based chat application",
+  "author": "Henri Pietila, Priyanka Shah, Shi-Hao Hong",
+  "license": "MIT",
   "engines": {
     "node": "7.10.0"
   },
